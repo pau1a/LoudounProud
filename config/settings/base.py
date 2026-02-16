@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "easy_thumbnails",
     "apps.core",
     "apps.newsletter",
+    "apps.advertising",
 ]
 
 MIDDLEWARE = [

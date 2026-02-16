@@ -1,0 +1,185 @@
+// ============================================
+// Right Rail
+// Two-column media layout on desktop.
+// Triggers the "established publication" heuristic.
+// ============================================
+
+.lead-story {
+  margin-bottom: $space-lg;
+}
+
+.content-rail {
+  display: grid;
+  gap: $space-lg;
+
+  @media (min-width: $bp-lg) {
+    grid-template-columns: 1fr 320px;
+    gap: $space-xl;
+  }
+}
+
+.content-rail__main {
+  display: grid;
+  gap: $space-md;
+}
+
+.content-rail__side {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+// Rail blocks — quiet, structured sidebar modules
+.rail-block {
+  padding: $space-lg;
+  background: $cold-grey;
+  border: 1px solid $mist-grey;
+  border-radius: $radius-md;
+}
+
+.rail-block__title {
+  font-family: $font-heading;
+  font-size: $font-size-base;
+  font-weight: 700;
+  color: $graphite;
+  margin-bottom: $space-sm;
+  padding-bottom: $space-sm;
+  border-bottom: 2px solid $graphite;
+}
+
+.rail-block__text {
+  font-size: $font-size-sm;
+  color: $slate;
+  margin-bottom: $space-md;
+}
+
+// Rail subscribe form — compact
+.rail-subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+
+  input[type="email"] {
+    padding: $space-sm $space-md;
+    border: 1px solid $mist-grey;
+    border-radius: $radius-sm;
+    background: $white;
+    color: $graphite;
+    font-size: $font-size-sm;
+
+    &::placeholder { color: $slate; }
+    &:focus {
+      outline: none;
+      border-color: $graphite;
+    }
+  }
+
+  button {
+    padding: $space-sm;
+    background: $graphite;
+    color: $white;
+    border: none;
+    border-radius: $radius-sm;
+    font-weight: 600;
+    font-size: $font-size-sm;
+    cursor: pointer;
+    transition: background $transition-fast;
+
+    &:hover { background: $slate; }
+  }
+}
+
+// Rail event list
+.rail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    gap: $space-sm;
+    padding: $space-sm 0;
+    border-bottom: 1px solid $mist-grey;
+    font-size: $font-size-sm;
+
+    &:last-child { border-bottom: none; }
+  }
+}
+
+.rail-list__date {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: $graphite;
+  min-width: 50px;
+}
+
+.rail-list__event {
+  color: $slate;
+}
+
+// Most Read — ranked list with numbered counters
+.rail-ranked {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: ranked;
+
+  li {
+    counter-increment: ranked;
+    display: flex;
+    gap: $space-sm;
+    padding: $space-sm 0;
+    border-bottom: 1px solid $mist-grey;
+    font-size: $font-size-sm;
+    line-height: 1.4;
+
+    &:last-child { border-bottom: none; }
+
+    &::before {
+      content: counter(ranked);
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: $slate;
+      background: $mist-grey;
+      border-radius: 50%;
+    }
+
+    a {
+      color: $graphite;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color $transition-fast;
+
+      &:hover { color: $accent; }
+    }
+  }
+}
+
+// Sponsor placeholder
+.rail-block--sponsor {
+  background: $white;
+  text-align: center;
+}
+
+.rail-block__label {
+  display: block;
+  font-size: 0.6875rem;  // 11px
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9CA3AF;
+  margin-bottom: $space-sm;
+}
+
+.rail-block__placeholder {
+  padding: $space-xl $space-md;
+  border: 1px dashed $mist-grey;
+  border-radius: $radius-sm;
+  color: $slate;
+  font-size: $font-size-sm;
+}

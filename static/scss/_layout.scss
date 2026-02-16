@@ -18,10 +18,10 @@
 }
 
 .section {
-  padding: $space-hero 0;
+  padding: $space-xl 0;
 
   @media (min-width: $bp-md) {
-    padding: $space-hero-lg 0;
+    padding: $space-hero 0;
   }
 }
 
@@ -30,13 +30,13 @@
 }
 
 .section__header {
-  margin-bottom: $space-xl;
+  margin-bottom: $space-lg;
   text-align: center;
 }
 
 .section__subtitle {
   margin-top: $space-sm;
-  color: #9CA3AF;  // lighter metadata for contrast
+  color: $slate;  // editorial contrast, not lifestyle-faint
   font-size: $font-size-base;
 }
 

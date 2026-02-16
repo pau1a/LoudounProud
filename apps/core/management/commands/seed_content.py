@@ -59,6 +59,8 @@ class Command(BaseCommand):
                     "and support for local businesses. The work is expected to begin in spring "
                     "and will focus on the area around the Cross and King Street."
                 ),
+                "image": "heroimages/palace.jpg",
+                "image_alt": "The Palace Theatre, Kilmarnock",
                 "link_text": "Go deeper →",
                 "sort_order": 0,
                 "is_featured": True,

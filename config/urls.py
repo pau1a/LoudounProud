@@ -15,6 +15,7 @@ urlpatterns = [
     path("admin/cdn/", cdn_browser, name="cdn_browser"),
     path("admin/", admin.site.urls),
     path("subscribe/", include("apps.newsletter.urls")),
+    path("ads/", include("apps.advertising.urls")),
     path(
         "sitemap.xml",
         sitemap,

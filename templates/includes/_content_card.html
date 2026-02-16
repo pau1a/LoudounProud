@@ -2,7 +2,11 @@
 <article class="content-card{% if is_featured %} content-card--featured{% endif %}">
   {% if card.image %}
   <div class="content-card__image">
+    {% if is_featured %}
+    <img src="{% thumbnail card.image 'hero' %}" alt="{{ card.image_alt|default:card.headline }}" loading="lazy">
+    {% else %}
     <img src="{% thumbnail card.image 'card' %}" alt="{{ card.image_alt|default:card.headline }}" loading="lazy">
+    {% endif %}
   </div>
   {% endif %}
   <div class="content-card__body">

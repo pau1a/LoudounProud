@@ -1,0 +1,71 @@
+// ============================================
+// Ad Slots
+// Structurally native. Never apologetic.
+// Designed into the grid before revenue exists.
+// ============================================
+
+.ad-slot {
+  text-align: center;
+}
+
+.ad-slot__label {
+  display: block;
+  font-size: 0.6875rem;  // 11px
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #C0C4CC;
+  margin-bottom: $space-micro;
+}
+
+.ad-slot__unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $cold-grey;
+  border: 1px solid $mist-grey;
+  border-radius: $radius-sm;
+  color: #C0C4CC;
+  font-size: $font-size-sm;
+  min-height: 90px;
+
+  // When empty, show nothing — collapse gracefully
+  &:empty {
+    min-height: 0;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+}
+
+// Leaderboard — beneath lead story
+.ad-slot--leaderboard {
+  margin: $space-lg 0;
+
+  .ad-slot__unit {
+    max-width: 728px;
+    min-height: 90px;
+    margin: 0 auto;
+  }
+}
+
+// Rail MPU — 300x250
+.ad-slot--rail {
+  .ad-slot__unit {
+    min-height: 250px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+// Section break — full width between content blocks
+.ad-slot--section-break {
+  padding: $space-md 0;
+  border-top: 1px solid $mist-grey;
+  border-bottom: 1px solid $mist-grey;
+
+  .ad-slot__unit {
+    max-width: 728px;
+    min-height: 90px;
+    margin: 0 auto;
+  }
+}

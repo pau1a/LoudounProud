@@ -42,27 +42,92 @@
   }
 }
 
-// Featured / dominant story — spans full width
+// Featured / dominant story — editorial anchor
 .content-card--featured {
-  @media (min-width: $bp-lg) {
-    grid-column: span 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  grid-column: 1 / -1;
+  position: relative;
+  border: none;
+  border-radius: $radius-lg;
+  min-height: 320px;
+  overflow: hidden;
+  background: $graphite;
 
-    .content-card__image {
-      aspect-ratio: auto;
-      min-height: 280px;
+  @media (min-width: $bp-md) {
+    min-height: 380px;
+  }
+
+  .content-card__image {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .content-card__headline {
-      font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.82) 0%,
+        rgba(0, 0, 0, 0.45) 50%,
+        rgba(0, 0, 0, 0.20) 100%
+      );
     }
+  }
 
-    .content-card__body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+  .content-card__body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 320px;
+    padding: $space-lg;
+
+    @media (min-width: $bp-md) {
+      min-height: 380px;
+      padding: $space-xl $space-xl $space-lg;
+      max-width: 65%;
     }
+  }
+
+  .content-card__lead {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .content-card__time {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .content-card__headline {
+    font-size: clamp(1.625rem, 3.2vw, 2.25rem);
+    font-weight: 800;
+    color: $white;
+    line-height: 1.15;
+    margin-bottom: $space-sm;
+  }
+
+  .content-card__text {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: $font-size-base;
+    line-height: 1.55;
+  }
+
+  .content-card__link {
+    color: $white;
+    opacity: 0.9;
+    &:hover { opacity: 1; }
+  }
+
+  &:hover {
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.06),
+      0 12px 32px rgba(0, 0, 0, 0.10);
   }
 }
 
