@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Subscribe — {{ settings.site_name }}{% endblock %}
+{% block meta_description %}Subscribe to Loudoun Proud — your free weekly Ayrshire newsletter. Local stories, events, and community news delivered every {{ settings.newsletter_day }}.{% endblock %}
+
+{% block content %}
+<section class="subscribe-page">
+  <div class="container container--narrow">
+    <div class="subscribe-page__hero">
+      <h1>Stay in the Loop</h1>
+      <p class="lead">
+        Your weekly dose of what's happening in Ayrshire, delivered every {{ settings.newsletter_day }}.
+        Takes 5 minutes to read. Completely free.
+      </p>
+    </div>
+
+    <div class="subscribe-page__value">
+      <div class="value-item">
+        <div class="value-item__icon">&#x1F4F0;</div>
+        <h3>Local Stories</h3>
+        <p>The news that actually affects your daily life in Ayrshire — not reheated national press releases.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-item__icon">&#x1F389;</div>
+        <h3>Events &amp; What's On</h3>
+        <p>Never miss a thing happening across Kilmarnock, Troon, Ayr, and the surrounding towns.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-item__icon">&#x2615;</div>
+        <h3>5-Minute Read</h3>
+        <p>Quick, scannable, and straight to the point. Like a mate filling you in over a cuppa.</p>
+      </div>
+    </div>
+
+    {% if form.errors %}
+    <div class="form-errors">
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="subscribe-form subscribe-form--stacked subscribe-form--light" style="margin: 0 auto;">
+      {% csrf_token %}
+      <div class="subscribe-form__field">
+        <input type="text" name="first_name" placeholder="First name (optional)" class="subscribe-form__input" value="{{ form.first_name.value|default:'' }}" aria-label="First name">
+      </div>
+      <div class="subscribe-form__field">
+        <input type="email" name="email" placeholder="Your email address" required class="subscribe-form__input" value="{{ form.email.value|default:'' }}" aria-label="Email address">
+      </div>
+      <button type="submit" class="subscribe-form__btn">Subscribe — It's Free</button>
+      <p class="subscribe-form__note">No spam. Unsubscribe any time. We respect your inbox.</p>
+    </form>
+
+    <div class="social-proof">
+      <span class="social-proof__count">Join your neighbours</span>
+      Ayrshire folk already getting the newsletter every {{ settings.newsletter_day }}
+    </div>
+  </div>
+</section>
+{% endblock %}

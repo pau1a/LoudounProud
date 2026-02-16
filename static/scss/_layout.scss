@@ -1,0 +1,74 @@
+// ============================================
+// Layout
+// ============================================
+
+.container {
+  width: 100%;
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+
+  @media (min-width: $bp-md) {
+    padding: 0 $space-xl;
+  }
+}
+
+.container--narrow {
+  max-width: $container-narrow;
+}
+
+.section {
+  padding: $space-3xl 0;
+
+  @media (min-width: $bp-md) {
+    padding: $space-4xl 0;
+  }
+}
+
+.section--dark {
+  background: $bg-dark;
+  color: $cream;
+
+  h2, h3 {
+    color: $cream;
+  }
+
+  .text-muted {
+    color: rgba($cream, 0.7);
+  }
+}
+
+.section--cream {
+  background: $off-white;
+}
+
+.section__header {
+  margin-bottom: $space-2xl;
+  text-align: center;
+}
+
+.section__subtitle {
+  margin-top: $space-sm;
+  color: $text-muted;
+  font-size: $font-size-lg;
+}
+
+.grid {
+  display: grid;
+  gap: $space-xl;
+
+  &--2 {
+    @media (min-width: $bp-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &--3 {
+    @media (min-width: $bp-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: $bp-lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

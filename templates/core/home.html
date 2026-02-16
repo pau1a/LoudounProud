@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ settings.site_name }} — {{ settings.tagline }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero__bg">
+    {% if settings.hero_image %}
+    <img src="{{ settings.hero_image.url }}" alt="" class="hero__image">
+    {% endif %}
+  </div>
+  <div class="container hero__content">
+    <span class="hero__label">Ayrshire's Community Newsletter</span>
+    <h1>{{ settings.hero_headline }}</h1>
+    <p class="hero__text">{{ settings.hero_subheadline }}</p>
+
+    <form method="post" action="{% url 'newsletter:subscribe' %}" class="hero__subscribe">
+      {% csrf_token %}
+      <input type="email" name="email" placeholder="Your email address" required aria-label="Email address">
+      <button type="submit">Subscribe Free</button>
+    </form>
+
+    {% if settings.hero_video_url %}
+    <div class="hero__video" role="button" tabindex="0" aria-label="Play welcome video">
+      <div class="hero__video-play"></div>
+      <span class="hero__video-label">Watch Brian's welcome</span>
+    </div>
+    {% else %}
+    <div class="hero__video" role="button" tabindex="0" aria-label="Video coming soon">
+      <div class="hero__video-play"></div>
+      <span class="hero__video-label">Brian's welcome — coming soon</span>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Featured Stories -->
+{% if cards %}
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <h2>What's Happening in Ayrshire</h2>
+      <p class="section__subtitle">The stories that matter to our community this week</p>
+    </div>
+    <div class="card-grid">
+      {% for card in cards %}
+        {% include "includes/_content_card.html" with card=card %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Teaser sections -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="grid grid--3">
+      <div class="teaser-card">
+        <h3>Events Calendar</h3>
+        <p>Coming soon — a full calendar of what's on across Kilmarnock, Troon, Ayr, and the surrounding towns.</p>
+      </div>
+      <div class="teaser-card">
+        <h3>Local Business Spotlight</h3>
+        <p>We'll be shining a light on the businesses that make Ayrshire tick. From Darvel to Irvine and everywhere between.</p>
+      </div>
+      <div class="teaser-card">
+        <h3>Community Stories</h3>
+        <p>The people and places of East Ayrshire — from Stewarton to Galston, and the stories you won't find anywhere else.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter CTA -->
+<section class="section subscribe-section">
+  <div class="container container--narrow">
+    <div class="section__header">
+      <h2>Don't Miss a Thing</h2>
+      <p class="section__subtitle" style="color: rgba(250, 248, 242, 0.7);">
+        Your weekly dose of what's happening in Ayrshire, delivered every {{ settings.newsletter_day }}. Takes 5 minutes to read.
+      </p>
+    </div>
+    <form method="post" action="{% url 'newsletter:subscribe' %}" class="subscribe-form">
+      {% csrf_token %}
+      <div class="subscribe-form__field">
+        <input type="email" name="email" placeholder="Your email address" required class="subscribe-form__input" aria-label="Email address">
+      </div>
+      <button type="submit" class="subscribe-form__btn">Subscribe Free</button>
+      <p class="subscribe-form__note">Free. No spam. Unsubscribe any time.</p>
+    </form>
+  </div>
+</section>
+{% endblock %}

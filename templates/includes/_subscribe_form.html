@@ -1,0 +1,8 @@
+<form method="post" action="{% url 'newsletter:subscribe' %}" class="subscribe-form subscribe-form--stacked">
+  {% csrf_token %}
+  <div class="subscribe-form__field">
+    <input type="email" name="email" placeholder="Your email address" required class="subscribe-form__input" aria-label="Email address">
+  </div>
+  <button type="submit" class="subscribe-form__btn">Subscribe</button>
+  <p class="subscribe-form__note">Free. Every {{ settings.newsletter_day }}. No spam.</p>
+</form>

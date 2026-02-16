@@ -1,0 +1,67 @@
+// ============================================
+// Loudoun Proud — Main Stylesheet
+// ============================================
+
+@import 'variables';
+@import 'reset';
+@import 'typography';
+@import 'layout';
+@import 'nav';
+@import 'hero';
+@import 'cards';
+@import 'subscribe';
+@import 'footer';
+@import 'about';
+
+// ============================================
+// Utility classes
+// ============================================
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+// Django messages
+.messages {
+  max-width: $container-max;
+  margin: $space-md auto;
+  padding: 0 $space-lg;
+
+  .message {
+    padding: $space-md $space-lg;
+    border-radius: $radius-md;
+    margin-bottom: $space-sm;
+    font-size: $font-size-sm;
+    font-weight: 600;
+
+    &.success {
+      background: rgba($moss-green, 0.1);
+      color: $forest-green;
+      border: 1px solid rgba($moss-green, 0.3);
+    }
+
+    &.error {
+      background: rgba(220, 38, 38, 0.1);
+      color: #dc2626;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    &.info, &.warning {
+      background: rgba($warm-amber, 0.1);
+      color: darken($warm-amber, 15%);
+      border: 1px solid rgba($warm-amber, 0.3);
+    }
+  }
+}

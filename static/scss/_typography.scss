@@ -1,0 +1,67 @@
+// ============================================
+// Typography
+// ============================================
+
+body {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $text-color;
+  background: $bg-body;
+}
+
+h1, h2, h3, h4 {
+  font-family: $font-heading;
+  font-weight: 700;
+  line-height: $line-height-heading;
+  color: $primary;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+p {
+  margin-bottom: $space-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.text-muted {
+  color: $text-muted;
+}
+
+.text-accent {
+  color: $accent;
+}
+
+.lead {
+  font-size: $font-size-lg;
+  line-height: 1.7;
+  color: $slate-grey;
+}
+
+strong, .bold-lead {
+  font-weight: 700;
+}
+
+.bold-lead {
+  color: $primary;
+  font-family: $font-heading;
+  font-size: $font-size-lg;
+}

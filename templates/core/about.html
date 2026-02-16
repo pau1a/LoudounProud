@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About — {{ settings.site_name }}{% endblock %}
+{% block meta_description %}Learn about Loudoun Proud and the man behind Ayrshire's favourite community newsletter.{% endblock %}
+
+{% block content %}
+<section class="about-hero">
+  <div class="container">
+    <h1>{{ settings.about_heading }}</h1>
+    <p class="lead" style="color: rgba(250, 248, 242, 0.8); max-width: 600px; margin: 0 auto;">
+      The story behind Ayrshire's community newsletter
+    </p>
+  </div>
+</section>
+
+<section class="about-content">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo">
+        {% if settings.about_image %}
+          <img src="{{ settings.about_image.url }}" alt="Brian Kelly">
+        {% else %}
+          Photo coming soon
+        {% endif %}
+      </div>
+      <div class="about-text">
+        <h2>Meet Brian</h2>
+        {% if settings.about_text %}
+          {{ settings.about_text|linebreaks }}
+        {% else %}
+          <p>
+            I'm Brian Kelly, and I've lived in Ayrshire my whole life. Born and raised in
+            Kilmarnock, I've watched this community through its ups and downs — and I've
+            always believed the best stories are the ones happening right on our doorstep.
+          </p>
+          <p>
+            Loudoun Proud started with a simple idea: what if there was one place where you
+            could find out what's actually going on around here? Not the national news with
+            a Scottish angle, but the real local stuff — the new cafe opening on King Street,
+            the school fundraiser in Galston, the planning application that might affect your
+            street.
+          </p>
+          <p>
+            Every week, I put together a newsletter that gives you the stories that matter to
+            folk who live here. It takes about 5 minutes to read, and it's completely free. No
+            clickbait, no doom-scrolling — just what's happening in your backyard, told by
+            someone who genuinely cares about this place.
+          </p>
+          <p>
+            Whether you're in Stewarton or Troon, Darvel or Irvine, Ayr or anywhere in
+            between — this is your newsletter. Welcome to Loudoun Proud.
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-mission">
+  <div class="container container--narrow">
+    <blockquote>
+      Keeping the local community informed, connected, and proud of where we live.
+      That's what Loudoun Proud is all about.
+    </blockquote>
+  </div>
+</section>
+
+<section class="section subscribe-section">
+  <div class="container container--narrow">
+    <div class="section__header">
+      <h2>Join the Community</h2>
+      <p class="section__subtitle" style="color: rgba(250, 248, 242, 0.7);">
+        Get Brian's weekly roundup delivered straight to your inbox.
+      </p>
+    </div>
+    <form method="post" action="{% url 'newsletter:subscribe' %}" class="subscribe-form">
+      {% csrf_token %}
+      <div class="subscribe-form__field">
+        <input type="email" name="email" placeholder="Your email address" required class="subscribe-form__input" aria-label="Email address">
+      </div>
+      <button type="submit" class="subscribe-form__btn">Subscribe Free</button>
+      <p class="subscribe-form__note">Free every {{ settings.newsletter_day }}. No spam, ever.</p>
+    </form>
+  </div>
+</section>
+{% endblock %}

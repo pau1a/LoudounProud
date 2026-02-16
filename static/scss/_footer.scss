@@ -1,0 +1,93 @@
+// ============================================
+// Footer
+// ============================================
+
+.site-footer {
+  background: $dark;
+  color: rgba($cream, 0.7);
+  padding: $space-3xl 0 $space-xl;
+}
+
+.site-footer__grid {
+  display: grid;
+  gap: $space-2xl;
+  margin-bottom: $space-2xl;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+.site-footer__brand {
+  font-family: $font-heading;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $cream;
+  margin-bottom: $space-md;
+
+  span {
+    color: $accent;
+  }
+}
+
+.site-footer__about {
+  font-size: $font-size-sm;
+  line-height: 1.7;
+  max-width: 360px;
+}
+
+.site-footer__heading {
+  font-family: $font-heading;
+  font-size: $font-size-base;
+  font-weight: 700;
+  color: $cream;
+  margin-bottom: $space-lg;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.site-footer__link {
+  font-size: $font-size-sm;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.site-footer__social {
+  display: flex;
+  gap: $space-md;
+}
+
+.site-footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba($cream, 0.1);
+  color: $cream;
+  font-size: $font-size-sm;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $accent;
+    color: $white;
+  }
+}
+
+.site-footer__bottom {
+  padding-top: $space-xl;
+  border-top: 1px solid rgba($cream, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: $space-md;
+  font-size: $font-size-sm;
+}

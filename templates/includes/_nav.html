@@ -1,0 +1,25 @@
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="container site-nav__inner">
+    <a href="{% url 'core:home' %}" class="site-nav__brand">
+      Loudoun<span>Proud</span>
+    </a>
+
+    <div class="site-nav__links">
+      <a href="{% url 'core:home' %}" class="site-nav__link">Home</a>
+      <a href="{% url 'core:about' %}" class="site-nav__link">About</a>
+      <a href="{% url 'newsletter:subscribe' %}" class="site-nav__cta">Subscribe</a>
+    </div>
+
+    <button class="site-nav__toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="site-nav__mobile" aria-label="Mobile navigation">
+    <a href="{% url 'core:home' %}" class="site-nav__link">Home</a>
+    <a href="{% url 'core:about' %}" class="site-nav__link">About</a>
+    <a href="{% url 'newsletter:subscribe' %}" class="site-nav__cta">Subscribe</a>
+  </div>
+</nav>

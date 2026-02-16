@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}You're In! — {{ settings.site_name }}{% endblock %}
+
+{% block content %}
+<section class="subscribe-success">
+  <div class="container container--narrow">
+    <h1>Welcome to the community!</h1>
+    <p>
+      We've sent a confirmation email to your inbox. Click the link in that email to
+      confirm your subscription and you'll be all set.
+    </p>
+    <p>
+      Check your spam folder if you don't see it — and add us to your contacts so
+      we always land in your inbox.
+    </p>
+    <a href="{% url 'core:home' %}" class="site-nav__cta" style="display: inline-flex; margin-top: 1.5rem;">
+      Back to Loudoun Proud
+    </a>
+  </div>
+</section>
+{% endblock %}

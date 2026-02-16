@@ -1,0 +1,124 @@
+// ============================================
+// Navigation
+// ============================================
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba($white, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $border-color;
+}
+
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+
+  @media (min-width: $bp-md) {
+    height: 72px;
+  }
+}
+
+.site-nav__brand {
+  font-family: $font-heading;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $primary;
+  letter-spacing: -0.02em;
+
+  span {
+    color: $accent;
+  }
+}
+
+.site-nav__links {
+  display: none;
+  gap: $space-xl;
+  align-items: center;
+
+  @media (min-width: $bp-md) {
+    display: flex;
+  }
+}
+
+.site-nav__link {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $slate-grey;
+  transition: color $transition-fast;
+
+  &:hover,
+  &--active {
+    color: $primary;
+  }
+}
+
+.site-nav__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-sm $space-lg;
+  background: $accent;
+  color: $white;
+  font-size: $font-size-sm;
+  font-weight: 700;
+  border-radius: $radius-md;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: darken($accent, 8%);
+    color: $white;
+  }
+}
+
+// Mobile menu toggle
+.site-nav__toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $space-sm;
+
+  @media (min-width: $bp-md) {
+    display: none;
+  }
+
+  span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: $slate-grey;
+    transition: $transition-fast;
+  }
+}
+
+// Mobile menu overlay
+.site-nav__mobile {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 64px;
+  background: $white;
+  z-index: 99;
+  padding: $space-xl;
+  flex-direction: column;
+  gap: $space-lg;
+
+  &.is-open {
+    display: flex;
+  }
+
+  .site-nav__link {
+    font-size: $font-size-lg;
+    padding: $space-md 0;
+    border-bottom: 1px solid $border-color;
+  }
+}

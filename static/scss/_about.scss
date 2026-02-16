@@ -1,0 +1,89 @@
+// ============================================
+// About Page
+// ============================================
+
+.about-hero {
+  background: $deep-green;
+  color: $cream;
+  padding: $space-4xl 0;
+  text-align: center;
+
+  h1 {
+    color: $cream;
+    margin-bottom: $space-md;
+  }
+}
+
+.about-content {
+  padding: $space-3xl 0;
+}
+
+.about-grid {
+  display: grid;
+  gap: $space-2xl;
+  align-items: start;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-photo {
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background: $off-white;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-muted;
+  font-size: $font-size-sm;
+  border: 2px dashed $border-color;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.about-text {
+  h2 {
+    margin-bottom: $space-lg;
+  }
+
+  p {
+    font-size: $font-size-lg;
+    line-height: 1.8;
+    margin-bottom: $space-lg;
+  }
+}
+
+.about-mission {
+  background: $off-white;
+  padding: $space-3xl 0;
+  text-align: center;
+
+  blockquote {
+    font-family: $font-heading;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-style: italic;
+    color: $primary;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    position: relative;
+    padding: 0 $space-xl;
+
+    &::before {
+      content: "\201C";
+      position: absolute;
+      left: 0;
+      top: -0.2em;
+      font-size: 3em;
+      color: $accent;
+      font-style: normal;
+      line-height: 1;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Subscription Confirmed — {{ settings.site_name }}{% endblock %}
+
+{% block content %}
+<section class="subscribe-success">
+  <div class="container container--narrow">
+    {% if confirmed %}
+    <h1>You're confirmed!</h1>
+    <p>
+      Your subscription is now active. You'll receive the next edition of Loudoun Proud
+      in your inbox on {{ settings.newsletter_day }}.
+    </p>
+    {% else %}
+    <h1>Something's not right</h1>
+    <p>
+      We couldn't find that confirmation link. It may have already been used, or the
+      link might be incorrect. Try subscribing again.
+    </p>
+    {% endif %}
+    <a href="{% url 'core:home' %}" class="site-nav__cta" style="display: inline-flex; margin-top: 1.5rem;">
+      Back to Loudoun Proud
+    </a>
+  </div>
+</section>
+{% endblock %}
