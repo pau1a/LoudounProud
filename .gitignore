@@ -1,0 +1,28 @@
+# Python
+*.pyc
+__pycache__/
+*.egg-info/
+.venv/
+
+# Environment
+.env
+
+# Database
+db.sqlite3
+
+# Node
+node_modules/
+
+# Compiled CSS (rebuild with npm run sass:build)
+static/css/main.css
+static/css/main.css.map
+
+# Media uploads
+media/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store

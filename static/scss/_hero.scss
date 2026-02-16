@@ -1,138 +1,98 @@
 // ============================================
 // Hero Section
+// Tighter. Authority above the fold.
 // ============================================
 
 .hero {
   position: relative;
-  min-height: 70vh;
-  display: flex;
-  align-items: center;
+  padding: $space-xl 0 $space-2xl;
+  border-bottom: 1px solid $mist-grey;
   overflow: hidden;
-  background: $deep-green;
-  color: $cream;
 
   @media (min-width: $bp-md) {
-    min-height: 80vh;
+    padding: $space-2xl 0 $space-hero;
+  }
+}
+
+.hero--has-image {
+  background-color: $graphite;
+  border-bottom: none;
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero__label {
+    background: rgba(255, 255, 255, 0.15);
+    color: $white;
+  }
+
+  h1 { color: $white; }
+  .hero__text { color: rgba(255, 255, 255, 0.85); }
+
+  .hero__subscribe {
+    input[type="email"] {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: transparent;
+    }
+    button {
+      background: $white;
+      color: $graphite;
+      &:hover { background: $mist-grey; }
+    }
   }
 }
 
 .hero__bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba($deep-green, 0.92) 0%,
-    rgba($forest-green, 0.85) 50%,
-    rgba($deep-green, 0.9) 100%
-  );
   z-index: 1;
 
-  // Placeholder pattern - gives texture without an image
-  &::before {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &::after {
     content: "";
     position: absolute;
     inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 80%, rgba($warm-amber, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba($moss-green, 0.2) 0%, transparent 50%);
+    background: linear-gradient(
+      to right,
+      rgba($graphite, 0.82) 0%,
+      rgba($graphite, 0.6) 50%,
+      rgba($graphite, 0.3) 100%
+    );
   }
-}
-
-.hero__image {
-  position: absolute;
-  inset: 0;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
 }
 
 .hero__content {
-  position: relative;
-  z-index: 2;
-  max-width: 640px;
-  padding: $space-3xl 0;
-
-  @media (min-width: $bp-md) {
-    padding: $space-4xl 0;
-  }
+  max-width: 600px;
 }
 
 .hero__label {
   display: inline-block;
-  padding: $space-xs $space-md;
-  background: rgba($warm-amber, 0.2);
-  color: $light-amber;
+  padding: $space-micro $space-sm;
+  background: $cold-grey;
+  color: $slate;
   font-size: $font-size-sm;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-weight: 600;
   border-radius: $radius-sm;
-  margin-bottom: $space-lg;
+  margin-bottom: $space-md;
 }
 
 .hero h1 {
-  color: $cream;
-  margin-bottom: $space-lg;
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  margin-bottom: $space-md;
 }
 
 .hero__text {
   font-size: $font-size-lg;
   line-height: 1.7;
-  color: rgba($cream, 0.85);
-  margin-bottom: $space-2xl;
-}
-
-// Video placeholder
-.hero__video {
-  position: relative;
-  margin-top: $space-2xl;
-  border-radius: $radius-lg;
-  overflow: hidden;
-  background: rgba($dark, 0.4);
-  aspect-ratio: 16 / 9;
-  max-width: 480px;
-  cursor: pointer;
-  border: 2px solid rgba($cream, 0.15);
-  transition: border-color $transition-base;
-
-  &:hover {
-    border-color: $accent;
-  }
-}
-
-.hero__video-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 64px;
-  height: 64px;
-  background: rgba($accent, 0.9);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 10px 0 10px 18px;
-    border-color: transparent transparent transparent $white;
-    margin-left: 4px;
-  }
-}
-
-.hero__video-label {
-  position: absolute;
-  bottom: $space-md;
-  left: $space-md;
-  font-size: $font-size-sm;
-  color: rgba($cream, 0.7);
-  font-weight: 600;
+  color: $slate;
+  margin-bottom: $space-lg;
 }
 
 // Inline subscribe form in hero
@@ -140,43 +100,63 @@
   display: flex;
   gap: $space-sm;
   flex-wrap: wrap;
-  max-width: 460px;
+  max-width: 440px;
 
   input[type="email"] {
     flex: 1;
     min-width: 200px;
-    padding: $space-md $space-lg;
-    border: 2px solid rgba($cream, 0.2);
+    padding: $space-sm $space-md;
+    border: 1px solid $mist-grey;
     border-radius: $radius-md;
-    background: rgba($white, 0.1);
-    color: $cream;
+    background: $white;
+    color: $graphite;
     font-size: $font-size-base;
 
     &::placeholder {
-      color: rgba($cream, 0.5);
+      color: $slate;
     }
 
     &:focus {
       outline: none;
-      border-color: $accent;
-      background: rgba($white, 0.15);
+      border-color: $graphite;
     }
   }
 
   button {
-    padding: $space-md $space-xl;
-    background: $accent;
+    padding: $space-sm $space-lg;
+    background: $graphite;
     color: $white;
     border: none;
     border-radius: $radius-md;
-    font-weight: 700;
+    font-weight: 600;
     font-size: $font-size-base;
     cursor: pointer;
     transition: background $transition-fast;
     white-space: nowrap;
 
     &:hover {
-      background: darken($accent, 8%);
+      background: $slate;
     }
   }
+}
+
+// Authority / credibility band
+.authority-band {
+  padding: $space-md 0;
+  border-bottom: 1px solid $mist-grey;
+  text-align: center;
+}
+
+.authority-band__text {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $graphite;
+  letter-spacing: 0.02em;
+  margin-bottom: $space-micro;
+}
+
+.authority-band__geo {
+  font-size: 0.8125rem;  // 13px
+  color: $slate;
+  letter-spacing: 0.04em;
 }

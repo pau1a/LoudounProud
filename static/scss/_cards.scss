@@ -1,10 +1,11 @@
 // ============================================
-// Content Cards (Axios / Morning Brew style)
+// Content Cards
+// Editorial shadow. Tighter grid. Hierarchy.
 // ============================================
 
 .card-grid {
   display: grid;
-  gap: $space-xl;
+  gap: $space-md;  // tighter gutters — informational density
 
   @media (min-width: $bp-lg) {
     grid-template-columns: repeat(2, 1fr);
@@ -13,15 +14,19 @@
 
 .content-card {
   position: relative;
-  background: $bg-card;
-  border-radius: $radius-lg;
+  background: $white;
+  border: 1px solid $mist-grey;
+  border-radius: $radius-md;
   overflow: hidden;
-  box-shadow: $shadow-sm;
-  transition: box-shadow $transition-base, transform $transition-base;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: box-shadow $transition-base;
 
   &:hover {
-    box-shadow: $shadow-md;
-    transform: translateY(-2px);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      0 8px 24px rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -34,93 +39,73 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform $transition-base;
-  }
-
-  .content-card:hover & img {
-    transform: scale(1.03);
   }
 }
 
-// Full-bleed image variant with text overlay
+// Featured / dominant story — spans full width
 .content-card--featured {
-  color: $cream;
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-
   @media (min-width: $bp-lg) {
     grid-column: span 2;
-    min-height: 400px;
-  }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
-  .content-card__image {
-    position: absolute;
-    inset: 0;
-    aspect-ratio: auto;
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba($dark, 0.85) 0%,
-        rgba($dark, 0.4) 50%,
-        transparent 100%
-      );
+    .content-card__image {
+      aspect-ratio: auto;
+      min-height: 280px;
     }
-  }
 
-  .content-card__body {
-    position: relative;
-    z-index: 2;
-  }
+    .content-card__headline {
+      font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    }
 
-  .content-card__lead {
-    color: $light-amber;
-  }
-
-  .content-card__headline {
-    color: $cream;
-  }
-
-  .content-card__text {
-    color: rgba($cream, 0.85);
+    .content-card__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 }
 
 .content-card__body {
-  padding: $space-lg;
+  padding: $space-md $space-lg;
 
   @media (min-width: $bp-md) {
-    padding: $space-xl;
+    padding: $space-lg $space-xl;
   }
+}
+
+.content-card__meta {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin-bottom: $space-sm;
 }
 
 .content-card__lead {
   display: inline-block;
-  font-family: $font-heading;
   font-weight: 700;
   font-size: $font-size-sm;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   color: $accent;
-  margin-bottom: $space-sm;
+}
+
+.content-card__time {
+  font-size: 0.8125rem;  // 13px
+  color: #9CA3AF;
 }
 
 .content-card__headline {
   font-family: $font-heading;
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
   font-weight: 700;
-  color: $primary;
+  color: $graphite;
   margin-bottom: $space-sm;
   line-height: $line-height-heading;
 }
 
 .content-card__text {
-  color: $text-muted;
+  color: $slate;
   font-size: $font-size-base;
   line-height: 1.6;
   margin-bottom: $space-md;
@@ -130,32 +115,56 @@
   display: inline-flex;
   align-items: center;
   gap: $space-xs;
-  font-weight: 700;
+  font-weight: 600;
   font-size: $font-size-sm;
   color: $accent;
   transition: gap $transition-fast;
 
   &:hover {
     gap: $space-sm;
-    color: darken($accent, 10%);
   }
 }
 
-// Placeholder card for teaser sections
+// Teaser placeholder cards
 .teaser-card {
-  background: $off-white;
-  border: 2px dashed $border-color;
-  border-radius: $radius-lg;
-  padding: $space-2xl;
+  background: $cold-grey;
+  border: 1px solid $mist-grey;
+  border-radius: $radius-md;
+  padding: $space-xl;
   text-align: center;
-  color: $text-muted;
 
   h3 {
-    color: $slate-grey;
     margin-bottom: $space-sm;
   }
 
   p {
+    color: $slate;
     font-size: $font-size-sm;
+  }
+}
+
+// Tag pills — BIG section 6
+.tag {
+  display: inline-block;
+  padding: $space-micro $space-sm;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: $radius-sm;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  &--kilmarnock {
+    background: rgba($kilmarnock-blue, 0.1);
+    color: $kilmarnock-blue;
+  }
+
+  &--ayr {
+    background: rgba($ayr-black, 0.08);
+    color: $ayr-black;
+  }
+
+  &--general {
+    background: $cold-grey;
+    color: $slate;
   }
 }

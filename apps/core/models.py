@@ -70,6 +70,8 @@ class ContentCard(models.Model):
     link_text = models.CharField(max_length=100, default="Go deeper →")
     sort_order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
+    is_featured = models.BooleanField(default=False, help_text="Feature as the dominant story")
+    published_date = models.DateTimeField(blank=True, null=True, help_text="When this story was published (shown as timestamp)")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -86,3 +88,23 @@ class ContentCard(models.Model):
         if self.lead_style == "custom":
             return self.custom_lead
         return dict(self.LEAD_CHOICES).get(self.lead_style, "")
+
+    @property
+    def time_label(self):
+        from django.utils import timezone
+        if not self.published_date:
+            return ""
+        now = timezone.now()
+        diff = now - self.published_date
+        if diff.days == 0:
+            hours = diff.seconds // 3600
+            if hours < 1:
+                return "Just now"
+            if hours == 1:
+                return "1 hour ago"
+            return f"{hours} hours ago"
+        if diff.days == 1:
+            return "Yesterday"
+        if diff.days < 7:
+            return f"{diff.days} days ago"
+        return "This week"

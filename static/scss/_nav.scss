@@ -1,37 +1,33 @@
 // ============================================
 // Navigation
+// BIG: White header + graphite text, thin underline
 // ============================================
 
 .site-nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba($white, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid $border-color;
+  background: $white;
+  border-bottom: 1px solid $mist-grey;
 }
 
 .site-nav__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  height: 60px;
 
   @media (min-width: $bp-md) {
-    height: 72px;
+    height: 64px;
   }
 }
 
 .site-nav__brand {
   font-family: $font-heading;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  color: $primary;
-  letter-spacing: -0.02em;
-
-  span {
-    color: $accent;
-  }
+  color: $graphite;
+  letter-spacing: -0.01em;
 }
 
 .site-nav__links {
@@ -47,14 +43,12 @@
 .site-nav__link {
   font-size: $font-size-sm;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: $slate-grey;
+  color: $slate;
   transition: color $transition-fast;
 
   &:hover,
   &--active {
-    color: $primary;
+    color: $graphite;
   }
 }
 
@@ -62,22 +56,19 @@
   display: inline-flex;
   align-items: center;
   padding: $space-sm $space-lg;
-  background: $accent;
+  background: $graphite;
   color: $white;
   font-size: $font-size-sm;
-  font-weight: 700;
-  border-radius: $radius-md;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-weight: 600;
+  border-radius: $radius-sm;
   transition: background $transition-fast;
 
   &:hover {
-    background: darken($accent, 8%);
+    background: $slate;
     color: $white;
   }
 }
 
-// Mobile menu toggle
 .site-nav__toggle {
   display: flex;
   flex-direction: column;
@@ -93,19 +84,56 @@
 
   span {
     display: block;
-    width: 24px;
+    width: 22px;
     height: 2px;
-    background: $slate-grey;
+    background: $graphite;
     transition: $transition-fast;
   }
 }
 
-// Mobile menu overlay
+// Category / section navigation strip
+.section-nav {
+  border-bottom: 1px solid $mist-grey;
+  background: $white;
+}
+
+.section-nav__inner {
+  display: flex;
+  gap: $space-lg;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: $space-sm 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: $bp-md) {
+    gap: $space-xl;
+    justify-content: center;
+  }
+}
+
+.section-nav__link {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: $slate;
+  white-space: nowrap;
+  transition: color $transition-fast;
+  padding: $space-micro 0;
+
+  &:hover,
+  &--active {
+    color: $graphite;
+  }
+}
+
 .site-nav__mobile {
   display: none;
   position: fixed;
   inset: 0;
-  top: 64px;
+  top: 60px;
   background: $white;
   z-index: 99;
   padding: $space-xl;
@@ -119,6 +147,6 @@
   .site-nav__link {
     font-size: $font-size-lg;
     padding: $space-md 0;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $mist-grey;
   }
 }

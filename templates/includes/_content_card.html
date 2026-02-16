@@ -1,12 +1,15 @@
 {% load easy_thumbnails_tags %}
-<article class="content-card{% if card.image and forloop.first %} content-card--featured{% endif %}">
+<article class="content-card{% if is_featured %} content-card--featured{% endif %}">
   {% if card.image %}
   <div class="content-card__image">
     <img src="{% thumbnail card.image 'card' %}" alt="{{ card.image_alt|default:card.headline }}" loading="lazy">
   </div>
   {% endif %}
   <div class="content-card__body">
-    <span class="content-card__lead">{{ card.lead_phrase }}</span>
+    <div class="content-card__meta">
+      <span class="content-card__lead">{{ card.lead_phrase }}</span>
+      {% if card.time_label %}<span class="content-card__time">{{ card.time_label }}</span>{% endif %}
+    </div>
     <h3 class="content-card__headline">{{ card.headline }}</h3>
     <p class="content-card__text">{{ card.body_text }}</p>
     {% if card.link_url %}

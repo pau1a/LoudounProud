@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "storages",
     "easy_thumbnails",
     "apps.core",
     "apps.newsletter",
@@ -121,12 +122,43 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# DigitalOcean Spaces (S3-compatible)
+DO_SPACES_KEY = os.getenv("DO_KEY", "")
+DO_SPACES_SECRET = os.getenv("DO_SECRET", "")
+DO_SPACES_BUCKET = "server1"
+DO_SPACES_REGION = "lon1"
+DO_SPACES_ENDPOINT = f"https://{DO_SPACES_REGION}.digitaloceanspaces.com"
+DO_SPACES_CDN_ENDPOINT = f"https://{DO_SPACES_BUCKET}.{DO_SPACES_REGION}.cdn.digitaloceanspaces.com"
+DO_SPACES_LOCATION = "loudounproud"  # prefix/folder within the bucket
+
+if DO_SPACES_KEY:
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    AWS_ACCESS_KEY_ID = DO_SPACES_KEY
+    AWS_SECRET_ACCESS_KEY = DO_SPACES_SECRET
+    AWS_STORAGE_BUCKET_NAME = DO_SPACES_BUCKET
+    AWS_S3_REGION_NAME = DO_SPACES_REGION
+    AWS_S3_ENDPOINT_URL = DO_SPACES_ENDPOINT
+    AWS_S3_CUSTOM_DOMAIN = f"{DO_SPACES_BUCKET}.{DO_SPACES_REGION}.cdn.digitaloceanspaces.com"
+    AWS_LOCATION = DO_SPACES_LOCATION
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+    MEDIA_URL = f"{DO_SPACES_CDN_ENDPOINT}/{DO_SPACES_LOCATION}/"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 THUMBNAIL_ALIASES = {
     "": {
-        "card": {"size": (600, 400), "crop": True},
-        "hero": {"size": (1200, 600), "crop": True},
-        "thumbnail": {"size": (300, 200), "crop": True},
+        "card": {"size": (600, 400), "crop": True, "quality": 82},
+        "hero": {"size": (1400, 700), "crop": True, "quality": 80},
+        "hero_mobile": {"size": (800, 500), "crop": True, "quality": 78},
+        "thumbnail": {"size": (300, 200), "crop": True, "quality": 82},
     },
 }
+THUMBNAIL_SUBDIR = "thumbs"

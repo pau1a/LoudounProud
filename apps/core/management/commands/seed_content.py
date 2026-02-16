@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 from apps.core.models import ContentCard, SiteSettings
 
@@ -7,6 +10,8 @@ class Command(BaseCommand):
     help = "Seed the database with placeholder content for Loudoun Proud"
 
     def handle(self, *args, **options):
+        now = timezone.now()
+
         # Create or update SiteSettings
         settings = SiteSettings.load()
         settings.site_name = "Loudoun Proud"
@@ -39,6 +44,7 @@ class Command(BaseCommand):
             "Whether you're in Stewarton or Troon, Darvel or Irvine, Ayr or anywhere in "
             "between — this is your newsletter. Welcome to Loudoun Proud."
         )
+        settings.hero_image = "heroimages/loudounhero.jpg"
         settings.save()
         self.stdout.write(self.style.SUCCESS("Created SiteSettings"))
 
@@ -55,6 +61,8 @@ class Command(BaseCommand):
                 ),
                 "link_text": "Go deeper →",
                 "sort_order": 0,
+                "is_featured": True,
+                "published_date": now - timedelta(hours=3),
             },
             {
                 "lead_style": "why_it_matters",
@@ -67,6 +75,7 @@ class Command(BaseCommand):
                 ),
                 "link_text": "Go deeper →",
                 "sort_order": 1,
+                "published_date": now - timedelta(hours=8),
             },
             {
                 "lead_style": "one_fun_thing",
@@ -79,6 +88,7 @@ class Command(BaseCommand):
                 ),
                 "link_text": "Go deeper →",
                 "sort_order": 2,
+                "published_date": now - timedelta(days=1),
             },
             {
                 "lead_style": "icymi",
@@ -91,6 +101,7 @@ class Command(BaseCommand):
                 ),
                 "link_text": "Go deeper →",
                 "sort_order": 3,
+                "published_date": now - timedelta(days=2),
             },
         ]
 

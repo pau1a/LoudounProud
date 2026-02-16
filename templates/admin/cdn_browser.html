@@ -1,0 +1,288 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}CDN Browser{% endblock %}
+{% block content_title %}<h1>CDN Browser</h1>{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Home</a>
+  {% for crumb in breadcrumbs %}
+    &rsaquo; <a href="?path={{ crumb.path }}">{{ crumb.name }}</a>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+<style>
+  .cdn-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex-wrap: wrap;
+  }
+  .cdn-toolbar form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0;
+  }
+  .cdn-toolbar input[type="file"] {
+    font-size: 13px;
+  }
+  .cdn-toolbar input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 180px;
+  }
+  .cdn-toolbar .btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .cdn-toolbar .btn-upload {
+    background: #417690;
+    color: #fff;
+  }
+  .cdn-toolbar .btn-upload:hover { background: #205067; }
+  .cdn-toolbar .btn-mkdir {
+    background: #79aec8;
+    color: #fff;
+  }
+  .cdn-toolbar .btn-mkdir:hover { background: #417690; }
+  .cdn-toolbar .separator {
+    width: 1px;
+    height: 28px;
+    background: #ccc;
+  }
+
+  .cdn-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .cdn-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+  }
+  .cdn-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    vertical-align: middle;
+  }
+  .cdn-table tr:hover { background: #f8f9fa; }
+
+  .cdn-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cdn-name .icon {
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .cdn-name a {
+    color: #417690;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .cdn-name a:hover { text-decoration: underline; }
+
+  .cdn-thumb {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    flex-shrink: 0;
+  }
+
+  .cdn-url {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cdn-url code {
+    font-size: 11px;
+    color: #666;
+    background: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 2px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .btn-copy {
+    padding: 2px 8px;
+    font-size: 11px;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #333;
+  }
+  .btn-copy:hover { background: #ddd; }
+
+  .btn-delete {
+    padding: 3px 10px;
+    font-size: 12px;
+    background: #ba2121;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .btn-delete:hover { background: #a41515; }
+
+  .cdn-meta {
+    color: #999;
+    font-size: 12px;
+  }
+
+  .cdn-empty {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-size: 14px;
+  }
+
+  .cdn-stats {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+</style>
+
+<!-- Toolbar -->
+<div class="cdn-toolbar">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="upload">
+    <input type="file" name="files" multiple>
+    <button type="submit" class="btn btn-upload">Upload</button>
+  </form>
+
+  <div class="separator"></div>
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="mkdir">
+    <input type="text" name="folder_name" placeholder="New folder name…">
+    <button type="submit" class="btn btn-mkdir">Create Folder</button>
+  </form>
+</div>
+
+<!-- Stats -->
+<p class="cdn-stats">
+  {{ folders|length }} folder{{ folders|length|pluralize:",s" }},
+  {{ files|length }} file{{ files|length|pluralize:",s" }}
+</p>
+
+<!-- File table -->
+<table class="cdn-table">
+  <thead>
+    <tr>
+      <th style="width:40%">Name</th>
+      <th>Size</th>
+      <th>Modified</th>
+      <th>CDN URL</th>
+      <th style="width:80px">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if parent_path %}
+    <tr>
+      <td>
+        <div class="cdn-name">
+          <span class="icon">⬆</span>
+          <a href="?path={{ parent_path }}">.. (parent)</a>
+        </div>
+      </td>
+      <td colspan="4"></td>
+    </tr>
+    {% endif %}
+
+    {% for folder in folders %}
+    <tr>
+      <td>
+        <div class="cdn-name">
+          <span class="icon">📁</span>
+          <a href="?path={{ folder.path }}">{{ folder.name }}/</a>
+        </div>
+      </td>
+      <td class="cdn-meta">—</td>
+      <td class="cdn-meta">—</td>
+      <td></td>
+      <td></td>
+    </tr>
+    {% endfor %}
+
+    {% for file in files %}
+    <tr>
+      <td>
+        <div class="cdn-name">
+          {% if file.is_image %}
+          <img src="{{ file.url }}" class="cdn-thumb" alt="" loading="lazy">
+          {% else %}
+          <span class="icon">📄</span>
+          {% endif %}
+          <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+        </div>
+      </td>
+      <td class="cdn-meta">{{ file.size }}</td>
+      <td class="cdn-meta">{{ file.modified|date:"d M Y H:i" }}</td>
+      <td>
+        <div class="cdn-url">
+          <code title="{{ file.url }}">{{ file.url }}</code>
+          <button type="button" class="btn-copy" onclick="copyUrl(this, '{{ file.url }}')" title="Copy URL">Copy</button>
+        </div>
+      </td>
+      <td>
+        <form method="post" style="margin:0" onsubmit="return confirm('Delete {{ file.name }}?')">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="key" value="{{ file.key }}">
+          <button type="submit" class="btn-delete">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+
+    {% if not folders and not files %}
+    <tr>
+      <td colspan="5" class="cdn-empty">This folder is empty</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+
+<script>
+function copyUrl(btn, url) {
+  navigator.clipboard.writeText(url).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = orig; }, 1500);
+  });
+}
+</script>
+{% endblock %}

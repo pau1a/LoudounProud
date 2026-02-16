@@ -5,8 +5,16 @@ from .models import ContentCard, SiteSettings
 
 
 def home(request: HttpRequest) -> HttpResponse:
-    cards = ContentCard.objects.filter(is_active=True)
-    return render(request, "core/home.html", {"cards": cards})
+    all_cards = ContentCard.objects.filter(is_active=True)
+    featured = all_cards.filter(is_featured=True).first()
+    if featured:
+        cards = all_cards.exclude(pk=featured.pk)
+    else:
+        cards = all_cards
+    return render(request, "core/home.html", {
+        "featured": featured,
+        "cards": cards,
+    })
 
 
 def about(request: HttpRequest) -> HttpResponse:

@@ -1,17 +1,18 @@
 // ============================================
 // Footer
+// BIG: graphite background, clean
 // ============================================
 
 .site-footer {
-  background: $dark;
-  color: rgba($cream, 0.7);
+  background: $graphite;
+  color: rgba($white, 0.65);
   padding: $space-3xl 0 $space-xl;
 }
 
 .site-footer__grid {
   display: grid;
-  gap: $space-2xl;
-  margin-bottom: $space-2xl;
+  gap: $space-xl;
+  margin-bottom: $space-xl;
 
   @media (min-width: $bp-md) {
     grid-template-columns: 2fr 1fr 1fr;
@@ -20,28 +21,24 @@
 
 .site-footer__brand {
   font-family: $font-heading;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  color: $cream;
+  color: $white;
   margin-bottom: $space-md;
-
-  span {
-    color: $accent;
-  }
 }
 
 .site-footer__about {
   font-size: $font-size-sm;
   line-height: 1.7;
-  max-width: 360px;
+  max-width: 340px;
 }
 
 .site-footer__heading {
   font-family: $font-heading;
   font-size: $font-size-base;
   font-weight: 700;
-  color: $cream;
-  margin-bottom: $space-lg;
+  color: $white;
+  margin-bottom: $space-md;
 }
 
 .site-footer__links {
@@ -55,39 +52,69 @@
   transition: color $transition-fast;
 
   &:hover {
-    color: $accent;
+    color: $white;
   }
 }
 
 .site-footer__social {
   display: flex;
-  gap: $space-md;
+  gap: $space-sm;
 }
 
 .site-footer__social-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba($cream, 0.1);
-  color: $cream;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-sm;
+  background: rgba($white, 0.1);
+  color: rgba($white, 0.65);
   font-size: $font-size-sm;
   transition: background $transition-fast;
 
   &:hover {
-    background: $accent;
+    background: rgba($white, 0.2);
     color: $white;
   }
 }
 
 .site-footer__bottom {
-  padding-top: $space-xl;
-  border-top: 1px solid rgba($cream, 0.1);
+  padding-top: $space-lg;
+  border-top: 1px solid rgba($white, 0.1);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: $space-md;
   font-size: $font-size-sm;
+}
+
+// Override subscribe form in footer context
+.site-footer {
+  .subscribe-form__input {
+    background: rgba($white, 0.08);
+    border-color: rgba($white, 0.15);
+    color: $white;
+
+    &::placeholder {
+      color: rgba($white, 0.4);
+    }
+
+    &:focus {
+      border-color: rgba($white, 0.4);
+    }
+  }
+
+  .subscribe-form__btn {
+    background: $white;
+    color: $graphite;
+
+    &:hover {
+      background: $mist-grey;
+    }
+  }
+
+  .subscribe-form__note {
+    color: rgba($white, 0.4);
+  }
 }

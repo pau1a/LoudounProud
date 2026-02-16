@@ -1,16 +1,19 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static easy_thumbnails_tags %}
 
 {% block title %}{{ settings.site_name }} — {{ settings.tagline }}{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero">
+<section class="hero{% if settings.hero_image %} hero--has-image{% endif %}">
+  {% if settings.hero_image %}
   <div class="hero__bg">
-    {% if settings.hero_image %}
-    <img src="{{ settings.hero_image.url }}" alt="" class="hero__image">
-    {% endif %}
+    <picture>
+      <source media="(max-width: 799px)" srcset="{% thumbnail settings.hero_image 'hero_mobile' %}">
+      <img src="{% thumbnail settings.hero_image 'hero' %}" alt="{{ settings.site_name }}" loading="eager">
+    </picture>
   </div>
+  {% endif %}
   <div class="container hero__content">
     <span class="hero__label">Ayrshire's Community Newsletter</span>
     <h1>{{ settings.hero_headline }}</h1>
@@ -21,23 +24,19 @@
       <input type="email" name="email" placeholder="Your email address" required aria-label="Email address">
       <button type="submit">Subscribe Free</button>
     </form>
-
-    {% if settings.hero_video_url %}
-    <div class="hero__video" role="button" tabindex="0" aria-label="Play welcome video">
-      <div class="hero__video-play"></div>
-      <span class="hero__video-label">Watch Brian's welcome</span>
-    </div>
-    {% else %}
-    <div class="hero__video" role="button" tabindex="0" aria-label="Video coming soon">
-      <div class="hero__video-play"></div>
-      <span class="hero__video-label">Brian's welcome — coming soon</span>
-    </div>
-    {% endif %}
   </div>
 </section>
 
+<!-- Credibility strip -->
+<div class="authority-band">
+  <div class="container">
+    <p class="authority-band__text">Independent. Local. Noise-free. Covering Ayrshire's towns, business, and civic life.</p>
+    <p class="authority-band__geo">Kilmarnock · Ayr · Troon · Prestwick · Irvine · Stewarton · Galston · Darvel</p>
+  </div>
+</div>
+
 <!-- Featured Stories -->
-{% if cards %}
+{% if featured or cards %}
 <section class="section">
   <div class="container">
     <div class="section__header">
@@ -45,6 +44,9 @@
       <p class="section__subtitle">The stories that matter to our community this week</p>
     </div>
     <div class="card-grid">
+      {% if featured %}
+        {% include "includes/_content_card.html" with card=featured is_featured=True %}
+      {% endif %}
       {% for card in cards %}
         {% include "includes/_content_card.html" with card=card %}
       {% endfor %}
@@ -54,7 +56,7 @@
 {% endif %}
 
 <!-- Teaser sections -->
-<section class="section section--cream">
+<section class="section section--panel">
   <div class="container">
     <div class="grid grid--3">
       <div class="teaser-card">
@@ -78,7 +80,7 @@
   <div class="container container--narrow">
     <div class="section__header">
       <h2>Don't Miss a Thing</h2>
-      <p class="section__subtitle" style="color: rgba(250, 248, 242, 0.7);">
+      <p class="section__subtitle">
         Your weekly dose of what's happening in Ayrshire, delivered every {{ settings.newsletter_day }}. Takes 5 minutes to read.
       </p>
     </div>

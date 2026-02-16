@@ -21,7 +21,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 @admin.register(ContentCard)
 class ContentCardAdmin(admin.ModelAdmin):
-    list_display = ("headline", "lead_style", "sort_order", "is_active", "updated")
-    list_editable = ("sort_order", "is_active")
-    list_filter = ("is_active", "lead_style")
+    list_display = ("headline", "lead_style", "sort_order", "is_featured", "is_active", "published_date", "updated")
+    list_editable = ("sort_order", "is_featured", "is_active")
+    list_filter = ("is_active", "is_featured", "lead_style")
     search_fields = ("headline", "body_text")

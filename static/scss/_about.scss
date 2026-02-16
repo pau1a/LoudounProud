@@ -1,15 +1,14 @@
 // ============================================
 // About Page
+// BIG: clean editorial, structured calm
 // ============================================
 
 .about-hero {
-  background: $deep-green;
-  color: $cream;
-  padding: $space-4xl 0;
+  padding: $space-3xl 0;
   text-align: center;
+  border-bottom: 1px solid $mist-grey;
 
   h1 {
-    color: $cream;
     margin-bottom: $space-md;
   }
 }
@@ -20,7 +19,7 @@
 
 .about-grid {
   display: grid;
-  gap: $space-2xl;
+  gap: $space-xl;
   align-items: start;
 
   @media (min-width: $bp-md) {
@@ -29,16 +28,16 @@
 }
 
 .about-photo {
-  border-radius: $radius-lg;
+  border-radius: $radius-md;
   overflow: hidden;
-  background: $off-white;
+  background: $cold-grey;
   aspect-ratio: 4 / 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $text-muted;
+  color: $slate;
   font-size: $font-size-sm;
-  border: 2px dashed $border-color;
+  border: 1px solid $mist-grey;
 
   img {
     width: 100%;
@@ -60,7 +59,7 @@
 }
 
 .about-mission {
-  background: $off-white;
+  background: $cold-grey;
   padding: $space-3xl 0;
   text-align: center;
 
@@ -68,8 +67,8 @@
     font-family: $font-heading;
     font-size: clamp(1.25rem, 2.5vw, 1.75rem);
     font-style: italic;
-    color: $primary;
-    max-width: 700px;
+    color: $graphite;
+    max-width: 640px;
     margin: 0 auto;
     line-height: 1.6;
     position: relative;
@@ -81,7 +80,7 @@
       left: 0;
       top: -0.2em;
       font-size: 3em;
-      color: $accent;
+      color: $mist-grey;
       font-style: normal;
       line-height: 1;
     }

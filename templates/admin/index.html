@@ -1,0 +1,16 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+{{ block.super }}
+
+<div id="cdn-browser-module" class="module">
+  <table>
+    <caption><a href="{% url 'cdn_browser' %}" class="section" title="CDN file manager">CDN Browser</a></caption>
+    <tr>
+      <th scope="row"><a href="{% url 'cdn_browser' %}">Browse &amp; manage files</a></th>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 // ============================================
 // Loudoun Proud — Main Stylesheet
+// Brand Identity Guide compliant
 // ============================================
 
 @import 'variables';
@@ -47,21 +48,21 @@
     font-weight: 600;
 
     &.success {
-      background: rgba($moss-green, 0.1);
-      color: $forest-green;
-      border: 1px solid rgba($moss-green, 0.3);
+      background: #F0FDF4;
+      color: #166534;
+      border: 1px solid #BBF7D0;
     }
 
     &.error {
-      background: rgba(220, 38, 38, 0.1);
-      color: #dc2626;
-      border: 1px solid rgba(220, 38, 38, 0.3);
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid #FECACA;
     }
 
     &.info, &.warning {
-      background: rgba($warm-amber, 0.1);
-      color: darken($warm-amber, 15%);
-      border: 1px solid rgba($warm-amber, 0.3);
+      background: $cold-grey;
+      color: $slate;
+      border: 1px solid $mist-grey;
     }
   }
 }

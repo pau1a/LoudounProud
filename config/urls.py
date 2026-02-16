@@ -5,12 +5,14 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
 from apps.core.sitemaps import StaticViewSitemap
+from apps.core.views_admin import cdn_browser
 
 sitemaps = {
     "static": StaticViewSitemap,
 }
 
 urlpatterns = [
+    path("admin/cdn/", cdn_browser, name="cdn_browser"),
     path("admin/", admin.site.urls),
     path("subscribe/", include("apps.newsletter.urls")),
     path(

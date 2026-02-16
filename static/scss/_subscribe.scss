@@ -1,15 +1,12 @@
 // ============================================
 // Subscribe Form & Page
+// BIG: clean, no heavy colour blocks
 // ============================================
 
 .subscribe-section {
-  background: $deep-green;
-  color: $cream;
+  background: $cold-grey;
+  border-top: 1px solid $mist-grey;
   text-align: center;
-
-  h2 {
-    color: $cream;
-  }
 }
 
 .subscribe-form {
@@ -17,7 +14,7 @@
   gap: $space-sm;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 540px;
+  max-width: 500px;
   margin: 0 auto;
 
   &--stacked {
@@ -35,53 +32,37 @@
 .subscribe-form__input {
   width: 100%;
   padding: $space-md $space-lg;
-  border: 2px solid rgba($cream, 0.2);
+  border: 1px solid $mist-grey;
   border-radius: $radius-md;
-  background: rgba($white, 0.1);
-  color: $cream;
+  background: $white;
+  color: $graphite;
   font-size: $font-size-base;
   transition: border-color $transition-fast;
 
   &::placeholder {
-    color: rgba($cream, 0.5);
+    color: $slate;
   }
 
   &:focus {
     outline: none;
-    border-color: $accent;
-    background: rgba($white, 0.15);
-  }
-
-  // On light backgrounds
-  .subscribe-form--light & {
-    background: $white;
-    color: $text-color;
-    border-color: $border-color;
-
-    &::placeholder {
-      color: $text-muted;
-    }
-
-    &:focus {
-      border-color: $primary;
-    }
+    border-color: $graphite;
   }
 }
 
 .subscribe-form__btn {
-  padding: $space-md $space-2xl;
-  background: $accent;
+  padding: $space-md $space-xl;
+  background: $graphite;
   color: $white;
   border: none;
   border-radius: $radius-md;
-  font-weight: 700;
+  font-weight: 600;
   font-size: $font-size-base;
   cursor: pointer;
   transition: background $transition-fast;
   white-space: nowrap;
 
   &:hover {
-    background: darken($accent, 8%);
+    background: $slate;
   }
 }
 
@@ -89,27 +70,23 @@
   width: 100%;
   margin-top: $space-sm;
   font-size: $font-size-sm;
-  color: rgba($cream, 0.6);
-
-  .subscribe-form--light & {
-    color: $text-muted;
-  }
+  color: $slate;
 }
 
 // Subscribe landing page
 .subscribe-page {
-  padding: $space-4xl 0;
+  padding: $space-3xl 0;
 }
 
 .subscribe-page__hero {
   text-align: center;
-  margin-bottom: $space-3xl;
+  margin-bottom: $space-2xl;
 }
 
 .subscribe-page__value {
   display: grid;
   gap: $space-lg;
-  margin-bottom: $space-3xl;
+  margin-bottom: $space-2xl;
 
   @media (min-width: $bp-md) {
     grid-template-columns: repeat(3, 1fr);
@@ -118,10 +95,10 @@
 
 .value-item {
   text-align: center;
-  padding: $space-xl;
+  padding: $space-lg;
 
   &__icon {
-    font-size: 2rem;
+    font-size: 1.75rem;
     margin-bottom: $space-md;
   }
 
@@ -131,29 +108,27 @@
   }
 
   p {
-    color: $text-muted;
+    color: $slate;
     font-size: $font-size-sm;
   }
 }
 
-// Social proof
 .social-proof {
   text-align: center;
-  padding: $space-2xl 0;
-  color: $text-muted;
+  padding: $space-xl 0;
+  color: $slate;
   font-size: $font-size-sm;
 
   &__count {
     font-family: $font-heading;
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
     font-weight: 700;
-    color: $primary;
+    color: $graphite;
     display: block;
     margin-bottom: $space-xs;
   }
 }
 
-// Success / thank you state
 .subscribe-success {
   text-align: center;
   padding: $space-4xl 0;
@@ -164,20 +139,19 @@
 
   p {
     font-size: $font-size-lg;
-    color: $text-muted;
+    color: $slate;
     max-width: 500px;
     margin: 0 auto $space-lg;
   }
 }
 
-// Form errors
 .form-errors {
-  background: rgba(220, 38, 38, 0.1);
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
   border-radius: $radius-md;
   padding: $space-md $space-lg;
   margin-bottom: $space-lg;
-  color: #dc2626;
+  color: #DC2626;
   font-size: $font-size-sm;
 
   ul {
