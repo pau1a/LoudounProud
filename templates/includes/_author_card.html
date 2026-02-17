@@ -1,0 +1,17 @@
+{% load easy_thumbnails_tags %}
+<div class="author-card">
+  {% if author.photo %}
+  <div class="author-card__photo">
+    <img src="{% thumbnail author.photo 'thumbnail' %}" alt="{{ author.name }}">
+  </div>
+  {% endif %}
+  <div class="author-card__info">
+    <a href="{{ author.get_absolute_url }}" class="author-card__name">{{ author.name }}</a>
+    {% if author.role_title %}
+    <span class="author-card__role">{{ author.role_title }}</span>
+    {% endif %}
+    {% if author.short_bio %}
+    <p class="author-card__bio">{{ author.short_bio }}</p>
+    {% endif %}
+  </div>
+</div>

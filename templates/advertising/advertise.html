@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Advertise With Loudoun Proud — {{ settings.site_name }}{% endblock %}
+{% block meta_description %}Reach engaged readers across Ayrshire. Display, sponsored content, and community partnership opportunities.{% endblock %}
+{% block og_title %}Advertise With Loudoun Proud{% endblock %}
+{% block og_description %}Reach engaged readers across Ayrshire.{% endblock %}
+
+{% block content %}
+
+<!-- 1. Authority Header -->
+<section class="advertise-hero section">
+  <div class="container container--narrow">
+    <h1 class="advertise-hero__title">Advertise With Loudoun Proud</h1>
+    <p class="advertise-hero__subtitle">Reach engaged readers across Ayrshire.</p>
+  </div>
+</section>
+
+<!-- 2. Coverage Statement -->
+<section class="advertise-coverage section">
+  <div class="container container--narrow">
+    <h2 class="advertise-section__heading">Trusted Local Coverage</h2>
+    <p class="advertise-section__text">Our journalism reaches readers across Ayrshire's key communities:</p>
+    <ul class="advertise-coverage__towns">
+      <li>Kilmarnock</li>
+      <li>Ayr</li>
+      <li>Troon</li>
+      <li>Prestwick</li>
+      <li>Irvine</li>
+      <li>Surrounding communities</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. Audience Description -->
+<section class="advertise-audience section">
+  <div class="container container--narrow">
+    <h2 class="advertise-section__heading">Who Reads Loudoun Proud</h2>
+    <p class="advertise-section__text">
+      Our readers are homeowners, professionals, families, and business owners who care about what happens locally. They are engaged, loyal, and trust the publication as a credible source of Ayrshire news.
+    </p>
+  </div>
+</section>
+
+<!-- 4. Inventory Overview -->
+<section class="advertise-inventory section">
+  <div class="container">
+    <h2 class="advertise-section__heading">Advertising Formats</h2>
+    <div class="advertise-inventory__grid">
+      <div class="advertise-inventory__card">
+        <h3 class="advertise-inventory__card-title">Display</h3>
+        <ul class="advertise-inventory__list">
+          <li>Homepage placements</li>
+          <li>Section sponsorship</li>
+          <li>Newsletter sponsorship</li>
+          <li>In-article placements</li>
+        </ul>
+      </div>
+      <div class="advertise-inventory__card">
+        <h3 class="advertise-inventory__card-title">Sponsored Content</h3>
+        <ul class="advertise-inventory__list">
+          <li>Clearly labelled</li>
+          <li>Professionally edited</li>
+          <li>Aligned with editorial tone</li>
+          <li>Distributed to newsletter</li>
+        </ul>
+      </div>
+      <div class="advertise-inventory__card">
+        <h3 class="advertise-inventory__card-title">Community Partnerships</h3>
+        <ul class="advertise-inventory__list">
+          <li>Event sponsorship</li>
+          <li>Community initiatives</li>
+          <li>Long-term brand presence</li>
+          <li>Bespoke packages</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Placement Diagram -->
+<section class="advertise-diagram section">
+  <div class="container container--narrow">
+    <h2 class="advertise-section__heading">Where Your Ad Appears</h2>
+    <div class="advertise-diagram__wireframe">
+      <div class="advertise-diagram__header">
+        <span>Navigation</span>
+      </div>
+      <div class="advertise-diagram__leaderboard">
+        <span>Leaderboard</span>
+      </div>
+      <div class="advertise-diagram__body">
+        <div class="advertise-diagram__content">
+          <div class="advertise-diagram__article-block"></div>
+          <div class="advertise-diagram__in-article">
+            <span>In-Article</span>
+          </div>
+          <div class="advertise-diagram__article-block"></div>
+        </div>
+        <div class="advertise-diagram__rail">
+          <span>Rail</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Social Proof (placeholder for future) -->
+
+<!-- 7. Enquiry Form -->
+<section class="advertise-enquiry section" id="enquire">
+  <div class="container container--narrow">
+    <h2 class="advertise-section__heading">Get in Touch</h2>
+    <p class="advertise-section__text">Tell us about your business and goals. We'll respond within one working day.</p>
+
+    <form method="post" action="{% url 'advertise' %}" class="advertise-form" data-advertise-form>
+      {% csrf_token %}
+      <div style="display:none" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      {% if form.errors %}
+      <div class="form-errors">
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+            <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <div class="advertise-form__row">
+        <div class="advertise-form__field">
+          <label for="id_name" class="advertise-form__label">Name</label>
+          {{ form.name }}
+        </div>
+        <div class="advertise-form__field">
+          <label for="id_business_name" class="advertise-form__label">Business Name</label>
+          {{ form.business_name }}
+        </div>
+      </div>
+
+      <div class="advertise-form__row">
+        <div class="advertise-form__field">
+          <label for="id_email" class="advertise-form__label">Email</label>
+          {{ form.email }}
+        </div>
+        <div class="advertise-form__field">
+          <label for="id_phone" class="advertise-form__label">Phone <span class="advertise-form__optional">(optional)</span></label>
+          {{ form.phone }}
+        </div>
+      </div>
+
+      <div class="advertise-form__row">
+        <div class="advertise-form__field">
+          <label for="id_budget_range" class="advertise-form__label">Budget Range</label>
+          {{ form.budget_range }}
+        </div>
+        <div class="advertise-form__field">
+          <label for="id_campaign_goal" class="advertise-form__label">Campaign Goal</label>
+          {{ form.campaign_goal }}
+        </div>
+      </div>
+
+      <div class="advertise-form__field advertise-form__field--full">
+        <label for="id_message" class="advertise-form__label">Message <span class="advertise-form__optional">(optional)</span></label>
+        {{ form.message }}
+      </div>
+
+      <button type="submit" class="advertise-form__btn">Send Enquiry</button>
+      <div class="advertise-form__message" data-advertise-message style="display:none"></div>
+    </form>
+  </div>
+</section>
+
+<!-- 8. Disclosure -->
+<section class="advertise-disclosure section">
+  <div class="container container--narrow">
+    <p class="advertise-disclosure__text">All sponsored content is labelled transparently. Editorial independence is non-negotiable.</p>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function() {
+    var form = document.querySelector('[data-advertise-form]');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var msgEl = form.querySelector('[data-advertise-message]');
+      var originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      if (msgEl) { msgEl.style.display = 'none'; msgEl.textContent = ''; }
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: new FormData(form)
+      })
+      .then(function(resp) { return resp.json(); })
+      .then(function(data) {
+        if (msgEl) {
+          msgEl.textContent = data.message;
+          msgEl.className = 'advertise-form__message ' + (data.ok ? 'advertise-form__message--success' : 'advertise-form__message--error');
+          msgEl.style.display = 'block';
+        }
+        if (data.ok) { form.reset(); }
+      })
+      .catch(function() {
+        if (msgEl) {
+          msgEl.textContent = 'Something went wrong. Please try again.';
+          msgEl.className = 'advertise-form__message advertise-form__message--error';
+          msgEl.style.display = 'block';
+        }
+      })
+      .finally(function() {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      });
+    });
+  })();
+</script>
+{% endblock %}

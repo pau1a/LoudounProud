@@ -1,5 +1,5 @@
 {% load easy_thumbnails_tags %}
-<article class="content-card{% if is_featured %} content-card--featured{% endif %}">
+<article class="content-card{% if is_featured %} content-card--featured{% endif %}" data-card-id="{{ card.pk }}">
   {% if card.image %}
   <div class="content-card__image">
     {% if is_featured %}

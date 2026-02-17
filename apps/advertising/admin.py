@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import AdCreative, AdImpression, AdSlot
+from .models import AdCreative, AdImpression, AdSlot, AdvertiserLead
 
 
 class AdCreativeInline(admin.TabularInline):
@@ -122,3 +122,51 @@ class AdImpressionAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return False
+
+
+@admin.register(AdvertiserLead)
+class AdvertiserLeadAdmin(admin.ModelAdmin):
+    list_display = (
+        "business_name",
+        "name",
+        "email",
+        "budget_range",
+        "campaign_goal",
+        "status",
+        "created",
+    )
+    list_filter = ("status", "budget_range", "campaign_goal")
+    list_editable = ("status",)
+    search_fields = ("name", "business_name", "email")
+    date_hierarchy = "created"
+    readonly_fields = (
+        "name",
+        "business_name",
+        "email",
+        "phone",
+        "budget_range",
+        "campaign_goal",
+        "message",
+        "created",
+        "updated",
+    )
+    fieldsets = [
+        ("Enquiry Details", {
+            "fields": (
+                "name",
+                "business_name",
+                "email",
+                "phone",
+                "budget_range",
+                "campaign_goal",
+                "message",
+            ),
+        }),
+        ("Pipeline", {
+            "fields": ("status", "notes"),
+        }),
+        ("Dates", {
+            "fields": ("created", "updated"),
+            "classes": ("collapse",),
+        }),
+    ]

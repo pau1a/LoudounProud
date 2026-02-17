@@ -158,3 +158,130 @@
     list-style: none;
   }
 }
+
+// ============================================
+// Newsletter Placement System
+// ============================================
+
+.newsletter-placement {
+  &--full {
+    padding: $space-xl 0;
+  }
+
+  &--inline {
+    padding: $space-md 0;
+  }
+
+  &--compact {
+    // inherits default spacing from container
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    margin-bottom: $space-sm;
+    color: $graphite;
+  }
+
+  &__text {
+    color: $slate;
+    font-size: $font-size-sm;
+    margin-bottom: $space-md;
+    line-height: $line-height-base;
+  }
+}
+
+.newsletter-form {
+  &--stacked {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &--inline {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    flex-wrap: wrap;
+  }
+
+  &__field {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  &__input {
+    width: 100%;
+    padding: $space-md $space-lg;
+    border: 1px solid $mist-grey;
+    border-radius: $radius-md;
+    background: $white;
+    color: $graphite;
+    font-size: $font-size-base;
+    transition: border-color $transition-fast;
+
+    &::placeholder {
+      color: $slate;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $graphite;
+    }
+  }
+
+  &__btn {
+    padding: $space-md $space-xl;
+    background: $graphite;
+    color: $white;
+    border: none;
+    border-radius: $radius-md;
+    font-weight: 600;
+    font-size: $font-size-base;
+    cursor: pointer;
+    transition: background $transition-fast;
+    white-space: nowrap;
+
+    &:hover {
+      background: $slate;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__inline-label {
+    font-weight: 600;
+    font-size: $font-size-sm;
+    color: $graphite;
+    white-space: nowrap;
+  }
+
+  &__note {
+    font-size: $font-size-sm;
+    color: $slate;
+    margin-top: $space-xs;
+  }
+
+  &__message {
+    font-size: $font-size-sm;
+    padding: $space-sm $space-md;
+    border-radius: $radius-sm;
+    margin-top: $space-sm;
+
+    &--success {
+      background: #F0FDF4;
+      color: #166534;
+      border: 1px solid #BBF7D0;
+    }
+
+    &--error {
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid #FECACA;
+    }
+  }
+}

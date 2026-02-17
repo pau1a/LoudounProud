@@ -1,0 +1,395 @@
+// ============================================
+// Article Detail Page
+// ============================================
+
+.article-hero {
+  position: relative;
+  max-height: 500px;
+  overflow: hidden;
+  margin-bottom: $space-lg;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+}
+
+.article-hero__caption {
+  font-size: $font-size-sm;
+  color: $slate;
+  margin-top: $space-sm;
+  padding: 0 $space-lg;
+  max-width: $container-max;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Article header
+.article-header {
+  margin-bottom: $space-xl;
+  padding-bottom: $space-lg;
+  border-bottom: 1px solid $mist-grey;
+}
+
+.article-header__meta-row {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin-bottom: $space-sm;
+}
+
+.article-header__category {
+  display: inline-block;
+  font-family: $font-body;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $accent;
+}
+
+.article-header__sponsored-tag {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $slate;
+  background: $cold-grey;
+  padding: 2px $space-sm;
+  border-radius: $radius-sm;
+}
+
+.article-header__time {
+  font-size: $font-size-sm;
+  color: $slate;
+}
+
+.article-header__title {
+  font-family: $font-heading;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: $line-height-heading;
+  color: $graphite;
+  margin-bottom: $space-sm;
+
+  @media (min-width: $bp-md) {
+    font-size: 2.5rem;
+  }
+}
+
+.article-header__deck {
+  font-size: $font-size-lg;
+  color: $slate;
+  line-height: 1.5;
+  margin-bottom: $space-md;
+}
+
+.article-header__byline {
+  font-size: $font-size-sm;
+  color: $slate;
+
+  a {
+    color: $graphite;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover { color: $accent; }
+  }
+}
+
+// Article body — rendered markdown
+.article-body {
+  font-family: $font-heading;
+  font-size: $font-size-lg;
+  line-height: $line-height-base;
+  color: $graphite;
+  margin-bottom: $space-xl;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: $radius-md;
+    margin: $space-lg 0;
+  }
+}
+
+// Sponsor attribution
+.article-sponsor {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-md;
+  background: $cold-grey;
+  border-radius: $radius-sm;
+  font-size: $font-size-sm;
+  margin-bottom: $space-lg;
+}
+
+.article-sponsor__label {
+  color: $slate;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+}
+
+// Share links
+.article-share {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding-top: $space-lg;
+  border-top: 1px solid $mist-grey;
+  margin-top: $space-xl;
+}
+
+.article-share__label {
+  font-size: $font-size-sm;
+  font-weight: 700;
+  color: $graphite;
+}
+
+.article-share a {
+  font-size: $font-size-sm;
+  color: $slate;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+// ============================================
+// About the Author — article footer
+// ============================================
+
+.article-footer-author {
+  margin-top: $space-xl;
+  padding-top: $space-lg;
+  border-top: 1px solid $mist-grey;
+}
+
+.article-footer-author__heading {
+  font-family: $font-heading;
+  font-size: $font-size-base;
+  font-weight: 700;
+  color: $graphite;
+  margin-bottom: $space-md;
+}
+
+// ============================================
+// Reusable Author Card
+// ============================================
+
+.author-card {
+  display: flex;
+  gap: $space-md;
+  align-items: flex-start;
+}
+
+.author-card__photo {
+  flex-shrink: 0;
+
+  img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.author-card__info {
+  min-width: 0;
+}
+
+.author-card__name {
+  display: block;
+  font-family: $font-heading;
+  font-weight: 700;
+  font-size: $font-size-base;
+  color: $graphite;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover { color: $accent; }
+}
+
+.author-card__role {
+  display: block;
+  font-size: $font-size-sm;
+  color: $slate;
+  margin-top: 2px;
+}
+
+.author-card__bio {
+  font-size: $font-size-sm;
+  color: $slate;
+  line-height: 1.5;
+  margin-top: $space-sm;
+}
+
+// ============================================
+// Author Page
+// ============================================
+
+.author-page-header {
+  display: flex;
+  gap: $space-lg;
+  align-items: flex-start;
+  margin-bottom: $space-xl;
+  padding-bottom: $space-lg;
+  border-bottom: 1px solid $mist-grey;
+}
+
+.author-page-header__photo {
+  flex-shrink: 0;
+
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    @media (min-width: $bp-md) {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+.author-page-header__name {
+  font-family: $font-heading;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: $line-height-heading;
+  color: $graphite;
+  margin-bottom: $space-xs;
+}
+
+.author-page-header__role {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $accent;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: $space-xs;
+}
+
+.author-page-header__location {
+  display: block;
+  font-size: $font-size-sm;
+  color: $slate;
+  margin-bottom: $space-sm;
+}
+
+.author-page-header__bio {
+  font-size: $font-size-base;
+  color: $slate;
+  line-height: 1.6;
+  margin-bottom: $space-sm;
+}
+
+.author-page-header__links {
+  display: flex;
+  gap: $space-md;
+
+  a {
+    font-size: $font-size-sm;
+    color: $slate;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color $transition-fast;
+
+    &:hover { color: $accent; }
+  }
+}
+
+// Author articles grid
+.author-articles__heading {
+  font-family: $font-heading;
+  font-size: $font-size-xl;
+  font-weight: 700;
+  color: $graphite;
+  margin-bottom: $space-lg;
+}
+
+.author-articles__grid {
+  display: grid;
+  gap: $space-md;
+}
+
+// Pagination
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-md;
+  margin-top: $space-xl;
+  padding-top: $space-lg;
+  border-top: 1px solid $mist-grey;
+}
+
+.pagination__link {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $graphite;
+  text-decoration: none;
+  padding: $space-sm $space-md;
+  border: 1px solid $mist-grey;
+  border-radius: $radius-sm;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $cold-grey;
+  }
+}
+
+.pagination__info {
+  font-size: $font-size-sm;
+  color: $slate;
+}
+
+// ============================================
+// Card byline + sponsored tag
+// ============================================
+
+.content-card__byline {
+  display: block;
+  font-size: 0.8125rem;
+  color: $slate;
+  margin-bottom: $space-sm;
+}
+
+.content-card__sponsored {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $slate;
+  background: $cold-grey;
+  padding: 1px $space-sm;
+  border-radius: $radius-sm;
+}
+
+// Featured card overrides for byline/sponsored
+.content-card--featured {
+  .content-card__byline {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .content-card__sponsored {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.text-muted {
+  color: $slate;
+  font-size: $font-size-sm;
+}

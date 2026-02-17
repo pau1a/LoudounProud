@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static easy_thumbnails_tags newsletter_tags %}
+
+{% block title %}{{ author.name }} — {{ settings.site_name }}{% endblock %}
+{% block meta_description %}{{ author.short_bio }}{% endblock %}
+{% block og_title %}{{ author.name }}{% endblock %}
+{% block og_description %}{{ author.short_bio }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <div class="content-rail">
+      <div class="content-rail__main">
+        <!-- Author header -->
+        <div class="author-page-header">
+          {% if author.photo %}
+          <div class="author-page-header__photo">
+            <img src="{% thumbnail author.photo 'thumbnail' %}" alt="{{ author.name }}">
+          </div>
+          {% endif %}
+          <div class="author-page-header__info">
+            <h1 class="author-page-header__name">{{ author.name }}</h1>
+            {% if author.role_title %}
+            <span class="author-page-header__role">{{ author.role_title }}</span>
+            {% endif %}
+            {% if author.location %}
+            <span class="author-page-header__location">{{ author.location }}</span>
+            {% endif %}
+            {% if author.bio %}
+            <p class="author-page-header__bio">{{ author.bio }}</p>
+            {% endif %}
+            {% if author.website_url or author.x_url or author.linkedin_url %}
+            <div class="author-page-header__links">
+              {% if author.website_url %}<a href="{{ author.website_url }}" target="_blank" rel="noopener">Website</a>{% endif %}
+              {% if author.x_url %}<a href="{{ author.x_url }}" target="_blank" rel="noopener">X</a>{% endif %}
+              {% if author.linkedin_url %}<a href="{{ author.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Articles by this author -->
+        <div class="author-articles">
+          <h2 class="author-articles__heading">Articles by {{ author.name }}</h2>
+          {% if articles %}
+          <div class="author-articles__grid">
+            {% for card in articles %}
+              {% include "includes/_article_card.html" with card=card %}
+            {% endfor %}
+          </div>
+
+          {% if articles.has_other_pages %}
+          <nav class="pagination" aria-label="Article pages">
+            {% if articles.has_previous %}
+            <a href="?page={{ articles.previous_page_number }}" class="pagination__link">Previous</a>
+            {% endif %}
+            <span class="pagination__info">Page {{ articles.number }} of {{ articles.paginator.num_pages }}</span>
+            {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}" class="pagination__link">Next</a>
+            {% endif %}
+          </nav>
+          {% endif %}
+          {% else %}
+          <p class="text-muted">No published articles yet.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="content-rail__side">
+        <div class="rail-block">
+          {% newsletter_signup "rail_primary" %}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

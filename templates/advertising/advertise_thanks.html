@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Thanks — {{ settings.site_name }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container container--narrow">
+    <div class="advertise-thanks">
+      <h1>Thanks for getting in touch.</h1>
+      <p>We've received your enquiry and will respond within one working day.</p>
+      <a href="{% url 'core:home' %}" class="advertise-form__btn">Back to homepage</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

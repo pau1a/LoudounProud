@@ -26,12 +26,13 @@
           <a href="{% url 'core:home' %}" class="site-footer__link">Home</a>
           <a href="{% url 'core:about' %}" class="site-footer__link">About</a>
           <a href="{% url 'newsletter:subscribe' %}" class="site-footer__link">Subscribe</a>
+          <a href="{% url 'advertise' %}" class="site-footer__link">Advertise</a>
         </div>
       </div>
 
       <div>
-        <h4 class="site-footer__heading">Get the Newsletter</h4>
-        {% include "includes/_subscribe_form.html" %}
+        {% load newsletter_tags %}
+        {% newsletter_signup "footer_global" %}
       </div>
     </div>
 

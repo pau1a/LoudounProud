@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static easy_thumbnails_tags most_read_tags newsletter_tags %}
+
+{% block title %}{{ article.title }} — {{ settings.site_name }}{% endblock %}
+{% block meta_description %}{{ article.meta_description }}{% endblock %}
+{% block og_title %}{{ article.title }}{% endblock %}
+{% block og_description %}{{ article.meta_description }}{% endblock %}
+{% if article.hero_image %}
+{% block og_image %}<meta property="og:image" content="{% thumbnail article.hero_image 'og_image' %}">{% endblock %}
+{% endif %}
+
+{% block extra_css %}
+<style>
+  .article-body h2 { margin-top: 2rem; margin-bottom: 0.75rem; }
+  .article-body h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  .article-body p { margin-bottom: 1rem; }
+  .article-body ul, .article-body ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+  .article-body blockquote {
+    border-left: 3px solid #374151;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: #6B7280;
+    font-style: italic;
+  }
+  .article-body a { color: #374151; text-decoration: underline; }
+  .article-body a:hover { color: #111827; }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if is_preview %}
+<div class="messages" role="alert">
+  <div class="message warning">Preview mode — this article is not yet published.</div>
+</div>
+{% endif %}
+
+<!-- Hero Image -->
+{% if article.hero_image %}
+<div class="article-hero">
+  <picture>
+    <source media="(max-width: 799px)" srcset="{% thumbnail article.hero_image 'hero_mobile' %}">
+    <img src="{% thumbnail article.hero_image 'hero' %}" alt="{{ article.hero_alt|default:article.title }}" loading="eager">
+  </picture>
+  {% if article.hero_caption %}
+  <p class="article-hero__caption">{{ article.hero_caption }}</p>
+  {% endif %}
+</div>
+{% endif %}
+
+<article class="section">
+  <div class="container">
+    <div class="content-rail">
+      <div class="content-rail__main">
+        <!-- Article header -->
+        <header class="article-header">
+          <div class="article-header__meta-row">
+            <span class="article-header__category">{{ article.get_category_display }}</span>
+            {% if article.is_sponsored %}<span class="article-header__sponsored-tag">Sponsored</span>{% endif %}
+            {% if article.time_label %}<span class="article-header__time">{{ article.time_label }}</span>{% endif %}
+          </div>
+          <h1 class="article-header__title">{{ article.title }}</h1>
+          {% if article.deck %}
+          <p class="article-header__deck">{{ article.deck }}</p>
+          {% endif %}
+          <div class="article-header__byline">
+            {% if article.byline_display %}
+            By {% if article.author and not article.byline_override %}<a href="{{ article.author.get_absolute_url }}"><strong>{{ article.byline_display }}</strong></a>{% else %}<strong>{{ article.byline_display }}</strong>{% endif %}
+            {% endif %}
+            {% if article.published_at %}{% if article.byline_display %} · {% endif %}{{ article.published_at|date:"j F Y" }}{% endif %}
+          </div>
+        </header>
+
+        <!-- Sponsor attribution -->
+        {% if article.is_sponsored and article.sponsor_name %}
+        <div class="article-sponsor">
+          <span class="article-sponsor__label">Sponsored by</span>
+          {% if article.sponsor_url %}
+          <a href="{{ article.sponsor_url }}" rel="nofollow sponsored" target="_blank">{{ article.sponsor_name }}</a>
+          {% else %}
+          <span>{{ article.sponsor_name }}</span>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Body -->
+        <div class="article-body">
+          {{ article.body_html|safe }}
+        </div>
+
+        <!-- Share -->
+        <div class="article-share">
+          <span class="article-share__label">Share this story</span>
+          <a href="https://twitter.com/intent/tweet?text={{ article.title|urlencode }}&url={{ request.build_absolute_uri }}" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener">Facebook</a>
+          <a href="mailto:?subject={{ article.title|urlencode }}&body={{ request.build_absolute_uri }}" rel="noopener">Email</a>
+        </div>
+
+        <!-- About the author -->
+        {% if article.author %}
+        <div class="article-footer-author">
+          <h4 class="article-footer-author__heading">About the author</h4>
+          {% include "includes/_author_card.html" with author=article.author %}
+        </div>
+        {% endif %}
+
+        <!-- Newsletter CTA -->
+        {% newsletter_signup "article_footer" %}
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="content-rail__side">
+        <div class="rail-block">
+          <h4 class="rail-block__title">Most Read</h4>
+          {% most_read "24h" 5 %}
+        </div>
+
+        <div class="rail-block">
+          {% newsletter_signup "rail_primary" %}
+        </div>
+      </aside>
+    </div>
+  </div>
+</article>
+
+<!-- JSON-LD Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "{{ article.title|escapejs }}",
+  {% if article.hero_image %}"image": "{{ article.hero_image.url }}",{% endif %}
+  "datePublished": "{{ article.published_at|date:'c' }}",
+  "dateModified": "{{ article.updated|date:'c' }}",
+  {% if article.author %}"author": {
+    "@type": "Person",
+    "name": "{{ article.author.name|escapejs }}",
+    "url": "{{ request.scheme }}://{{ request.get_host }}{{ article.author.get_absolute_url }}"
+  },{% endif %}
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ settings.site_name|escapejs }}"
+  },
+  "description": "{{ article.meta_description|escapejs }}"
+}
+</script>
+{% endblock %}

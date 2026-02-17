@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import reverse
 
-from .models import ContentCard, SiteSettings
+from .models import SiteSettings
 
 
 # Inject CDN Browser into the admin index app list
@@ -45,9 +45,3 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         return False
 
 
-@admin.register(ContentCard)
-class ContentCardAdmin(admin.ModelAdmin):
-    list_display = ("headline", "lead_style", "sort_order", "is_featured", "is_active", "published_date", "updated")
-    list_editable = ("sort_order", "is_featured", "is_active")
-    list_filter = ("is_active", "is_featured", "lead_style")
-    search_fields = ("headline", "body_text")

@@ -1,0 +1,10 @@
+{% if cards %}
+<ol class="rail-ranked">
+  {% for card in cards %}
+  <li>
+    <a href="{{ card.get_absolute_url }}">{{ card.title }}</a>
+    {% if card.time_label %}<span class="rail-ranked__time">{{ card.time_label }}</span>{% endif %}
+  </li>
+  {% endfor %}
+</ol>
+{% endif %}

@@ -197,3 +197,48 @@ class AdImpression(models.Model):
 
     def __str__(self):
         return f"{self.event_type} — {self.creative.name} — {self.timestamp:%Y-%m-%d %H:%M}"
+
+
+class AdvertiserLead(models.Model):
+    """Structured enquiry from a prospective advertiser."""
+
+    BUDGET_CHOICES = [
+        ("250-500", "£250 – £500"),
+        ("500-1000", "£500 – £1,000"),
+        ("1000-2500", "£1,000 – £2,500"),
+        ("2500+", "£2,500+"),
+    ]
+
+    GOAL_CHOICES = [
+        ("awareness", "Brand Awareness"),
+        ("promotion", "Promotion / Offer"),
+        ("hiring", "Hiring / Recruitment"),
+        ("other", "Other"),
+    ]
+
+    STATUS_CHOICES = [
+        ("new", "New"),
+        ("contacted", "Contacted"),
+        ("qualified", "Qualified"),
+        ("closed", "Closed"),
+    ]
+
+    name = models.CharField(max_length=100)
+    business_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True)
+    budget_range = models.CharField(max_length=20, choices=BUDGET_CHOICES, blank=True)
+    campaign_goal = models.CharField(max_length=20, choices=GOAL_CHOICES, blank=True)
+    message = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="new")
+    notes = models.TextField(blank=True, help_text="Internal notes — not visible to the enquirer.")
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Advertiser Lead"
+        verbose_name_plural = "Advertiser Leads"
+        ordering = ["-created"]
+
+    def __str__(self):
+        return f"{self.business_name} — {self.name}"

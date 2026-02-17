@@ -43,8 +43,8 @@
 
   {% block extra_js %}{% endblock %}
   <script>
-    // Mobile nav toggle
     document.addEventListener('DOMContentLoaded', function() {
+      // Mobile nav toggle
       var toggle = document.querySelector('.site-nav__toggle');
       var mobile = document.querySelector('.site-nav__mobile');
       if (toggle && mobile) {
@@ -52,6 +52,55 @@
           mobile.classList.toggle('is-open');
         });
       }
+
+      // Track content card clicks for Most Read
+      document.querySelectorAll('[data-card-id] a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var cardId = this.closest('[data-card-id]').dataset.cardId;
+          if (cardId) {
+            navigator.sendBeacon('/api/track-view/', new URLSearchParams({card_id: cardId}));
+          }
+        });
+      });
+
+      // AJAX newsletter form submissions
+      document.querySelectorAll('[data-newsletter-form]').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var btn = form.querySelector('button[type="submit"]');
+          var msgEl = form.querySelector('[data-newsletter-message]');
+          var originalText = btn.textContent;
+          btn.disabled = true;
+          btn.textContent = 'Sending…';
+          if (msgEl) { msgEl.style.display = 'none'; msgEl.textContent = ''; }
+
+          fetch(form.action, {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            body: new FormData(form)
+          })
+          .then(function(resp) { return resp.json(); })
+          .then(function(data) {
+            if (msgEl) {
+              msgEl.textContent = data.message || (data.ok ? 'Thanks!' : 'Something went wrong.');
+              msgEl.className = 'newsletter-form__message ' + (data.ok ? 'newsletter-form__message--success' : 'newsletter-form__message--error');
+              msgEl.style.display = 'block';
+            }
+            if (data.ok) { form.reset(); }
+          })
+          .catch(function() {
+            if (msgEl) {
+              msgEl.textContent = 'Something went wrong. Please try again.';
+              msgEl.className = 'newsletter-form__message newsletter-form__message--error';
+              msgEl.style.display = 'block';
+            }
+          })
+          .finally(function() {
+            btn.disabled = false;
+            btn.textContent = originalText;
+          });
+        });
+      });
     });
   </script>
 </body>

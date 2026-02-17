@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.newsletter",
     "apps.advertising",
+    "apps.articles",
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.articles.middleware.PublishScheduledMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -152,6 +154,28 @@ if DO_SPACES_KEY:
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
     MEDIA_URL = f"{DO_SPACES_CDN_ENDPOINT}/{DO_SPACES_LOCATION}/"
 
+# Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    },
+    "redis": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
+}
+
+# Email (MXroute SMTP)
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "newsletter@loudounproud.com")
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 THUMBNAIL_ALIASES = {
@@ -160,6 +184,10 @@ THUMBNAIL_ALIASES = {
         "hero": {"size": (1400, 700), "crop": True, "quality": 80},
         "hero_mobile": {"size": (800, 500), "crop": True, "quality": 78},
         "thumbnail": {"size": (300, 200), "crop": True, "quality": 82},
+        "article_hero": {"size": (1600, 900), "crop": True, "quality": 80},
+        "article_hero_mobile": {"size": (900, 506), "crop": True, "quality": 78},
+        "article_card": {"size": (900, 600), "crop": True, "quality": 82},
+        "og_image": {"size": (1200, 630), "crop": True, "quality": 82},
     },
 }
 THUMBNAIL_SUBDIR = "thumbs"

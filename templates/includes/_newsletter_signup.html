@@ -1,0 +1,56 @@
+{% if show %}
+{% if placement.style == "full" %}
+{# Full variant — headline + description + form + incentive #}
+<div class="newsletter-placement newsletter-placement--full">
+  {% if placement.title %}<h4 class="newsletter-placement__title">{{ placement.title }}</h4>{% endif %}
+  {% if placement.description %}<p class="newsletter-placement__text">{{ placement.description }}</p>{% endif %}
+  <form method="post" action="{% url 'newsletter:subscribe' %}" class="newsletter-form newsletter-form--stacked" data-newsletter-form>
+    {% csrf_token %}
+    <input type="hidden" name="placement" value="{{ placement.key }}">
+    <div style="display:none" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <div class="newsletter-form__field">
+      <input type="email" name="email" placeholder="Your email address" required class="newsletter-form__input" aria-label="Email address">
+    </div>
+    <button type="submit" class="newsletter-form__btn">{{ placement.cta_text }}</button>
+    {% if placement.incentive_text %}<p class="newsletter-form__note">{{ placement.incentive_text }}</p>{% endif %}
+    <div class="newsletter-form__message" data-newsletter-message style="display:none"></div>
+  </form>
+</div>
+
+{% elif placement.style == "inline" %}
+{# Inline variant — horizontal bar #}
+<div class="newsletter-placement newsletter-placement--inline">
+  <form method="post" action="{% url 'newsletter:subscribe' %}" class="newsletter-form newsletter-form--inline" data-newsletter-form>
+    {% csrf_token %}
+    <input type="hidden" name="placement" value="{{ placement.key }}">
+    <div style="display:none" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    {% if placement.title %}<span class="newsletter-form__inline-label">{{ placement.title }}</span>{% endif %}
+    <input type="email" name="email" placeholder="Your email" required class="newsletter-form__input" aria-label="Email address">
+    <button type="submit" class="newsletter-form__btn">{{ placement.cta_text }}</button>
+    <div class="newsletter-form__message" data-newsletter-message style="display:none"></div>
+  </form>
+</div>
+
+{% else %}
+{# Compact variant (default) — email + button, vertical #}
+<div class="newsletter-placement newsletter-placement--compact">
+  {% if placement.title %}<h4 class="newsletter-placement__title">{{ placement.title }}</h4>{% endif %}
+  {% if placement.description %}<p class="newsletter-placement__text">{{ placement.description }}</p>{% endif %}
+  <form method="post" action="{% url 'newsletter:subscribe' %}" class="newsletter-form newsletter-form--stacked" data-newsletter-form>
+    {% csrf_token %}
+    <input type="hidden" name="placement" value="{{ placement.key }}">
+    <div style="display:none" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <input type="email" name="email" placeholder="Your email" required class="newsletter-form__input" aria-label="Email address">
+    <button type="submit" class="newsletter-form__btn">{{ placement.cta_text }}</button>
+    {% if placement.incentive_text %}<p class="newsletter-form__note">{{ placement.incentive_text }}</p>{% endif %}
+    <div class="newsletter-form__message" data-newsletter-message style="display:none"></div>
+  </form>
+</div>
+{% endif %}
+{% endif %}

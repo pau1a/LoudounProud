@@ -1,0 +1,25 @@
+{% load easy_thumbnails_tags %}
+<article class="content-card{% if is_featured %} content-card--featured{% endif %}" data-card-id="{{ card.pk }}">
+  {% if card.hero_image %}
+  <div class="content-card__image">
+    {% if is_featured %}
+    <img src="{% thumbnail card.hero_image 'hero' %}" alt="{{ card.hero_alt|default:card.title }}" loading="lazy">
+    {% else %}
+    <img src="{% thumbnail card.hero_image 'card' %}" alt="{{ card.hero_alt|default:card.title }}" loading="lazy">
+    {% endif %}
+  </div>
+  {% endif %}
+  <div class="content-card__body">
+    <div class="content-card__meta">
+      <span class="content-card__lead">{{ card.get_category_display }}</span>
+      {% if card.is_sponsored %}<span class="content-card__sponsored">Sponsored</span>{% endif %}
+      {% if card.time_label %}<span class="content-card__time">{{ card.time_label }}</span>{% endif %}
+    </div>
+    <h3 class="content-card__headline">{{ card.title }}</h3>
+    {% if card.deck %}<p class="content-card__text">{{ card.deck }}</p>{% endif %}
+    {% if card.byline_display %}
+    <span class="content-card__byline">{{ card.byline_display }}</span>
+    {% endif %}
+    <a href="{{ card.get_absolute_url }}" class="content-card__link">Read more →</a>
+  </div>
+</article>

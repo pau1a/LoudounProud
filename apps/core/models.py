@@ -72,6 +72,10 @@ class ContentCard(models.Model):
     is_active = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False, help_text="Feature as the dominant story")
     published_date = models.DateTimeField(blank=True, null=True, help_text="When this story was published (shown as timestamp)")
+    exclude_from_most_read = models.BooleanField(
+        default=False,
+        help_text="Hide from Most Read lists (legal, sensitive, sponsored)",
+    )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

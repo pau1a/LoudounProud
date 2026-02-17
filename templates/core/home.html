@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static easy_thumbnails_tags ad_tags %}
+{% load static easy_thumbnails_tags ad_tags most_read_tags newsletter_tags %}
 
 {% block title %}{{ settings.site_name }} — {{ settings.tagline }}{% endblock %}
 
@@ -19,11 +19,7 @@
     <h1>{{ settings.hero_headline }}</h1>
     <p class="hero__text">{{ settings.hero_subheadline }}</p>
 
-    <form method="post" action="{% url 'newsletter:subscribe' %}" class="hero__subscribe">
-      {% csrf_token %}
-      <input type="email" name="email" placeholder="Your email address" required aria-label="Email address">
-      <button type="submit">Subscribe Free</button>
-    </form>
+    {% newsletter_signup "hero_subscribe" %}
   </div>
 </section>
 
@@ -47,7 +43,7 @@
     <!-- Lead story — full width above the rail split -->
     {% if featured %}
     <div class="lead-story">
-      {% include "includes/_content_card.html" with card=featured is_featured=True %}
+      {% include "includes/_article_card.html" with card=featured is_featured=True %}
     </div>
     {% endif %}
 
@@ -63,31 +59,19 @@
     <div class="content-rail">
       <div class="content-rail__main">
         {% for card in cards %}
-          {% include "includes/_content_card.html" with card=card %}
+          {% include "includes/_article_card.html" with card=card %}
         {% endfor %}
       </div>
       <aside class="content-rail__side">
         <!-- Newsletter CTA -->
         <div class="rail-block">
-          <h4 class="rail-block__title">Get the Newsletter</h4>
-          <p class="rail-block__text">Local stories delivered every {{ settings.newsletter_day }}. Free. No spam.</p>
-          <form method="post" action="{% url 'newsletter:subscribe' %}" class="rail-subscribe">
-            {% csrf_token %}
-            <input type="email" name="email" placeholder="Your email" required aria-label="Email address">
-            <button type="submit">Subscribe</button>
-          </form>
+          {% newsletter_signup "rail_primary" %}
         </div>
 
         <!-- Most Read -->
         <div class="rail-block">
           <h4 class="rail-block__title">Most Read</h4>
-          <ol class="rail-ranked">
-            <li><a href="#">Kilmarnock town centre gets £2.5m regeneration boost</a></li>
-            <li><a href="#">New community hub planned for Galston</a></li>
-            <li><a href="#">Troon beach named in Scotland's top 10 — again</a></li>
-            <li><a href="#">Darvel's wee independent bookshop celebrates first anniversary</a></li>
-            <li><a href="#">Council approves Irvine waterfront development</a></li>
-          </ol>
+          {% most_read "24h" 5 %}
         </div>
 
         <!-- Rail ad — MPU -->
@@ -163,20 +147,7 @@
 <!-- Newsletter CTA -->
 <section class="section subscribe-section">
   <div class="container container--narrow">
-    <div class="section__header">
-      <h2>Don't Miss a Thing</h2>
-      <p class="section__subtitle">
-        Your weekly dose of what's happening in Ayrshire, delivered every {{ settings.newsletter_day }}. Takes 5 minutes to read.
-      </p>
-    </div>
-    <form method="post" action="{% url 'newsletter:subscribe' %}" class="subscribe-form">
-      {% csrf_token %}
-      <div class="subscribe-form__field">
-        <input type="email" name="email" placeholder="Your email address" required class="subscribe-form__input" aria-label="Email address">
-      </div>
-      <button type="submit" class="subscribe-form__btn">Subscribe Free</button>
-      <p class="subscribe-form__note">Free. No spam. Unsubscribe any time.</p>
-    </form>
+    {% newsletter_signup "footer_cta" %}
   </div>
 </section>
 {% endblock %}
