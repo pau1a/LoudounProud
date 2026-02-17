@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from apps.articles.models import Article
+from apps.articles.models import Article, CATEGORY_CHOICES
 
 
 class StaticViewSitemap(Sitemap):
@@ -13,6 +13,17 @@ class StaticViewSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
+
+
+class SectionSitemap(Sitemap):
+    changefreq = "daily"
+    priority = 0.8
+
+    def items(self):
+        return [key for key, _ in CATEGORY_CHOICES]
+
+    def location(self, item):
+        return reverse("section_page", kwargs={"section": item})
 
 
 class ArticleSitemap(Sitemap):

@@ -5,12 +5,13 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
 from apps.advertising.views import advertise
-from apps.articles.views import author_detail
-from apps.core.sitemaps import ArticleSitemap, StaticViewSitemap
+from apps.articles.views import author_detail, section_page
+from apps.core.sitemaps import ArticleSitemap, SectionSitemap, StaticViewSitemap
 from apps.core.views_admin import cdn_browser
 
 sitemaps = {
     "static": StaticViewSitemap,
+    "sections": SectionSitemap,
     "articles": ArticleSitemap,
 }
 
@@ -28,6 +29,7 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
+    path("<slug:section>/", section_page, name="section_page"),
     path("", include("apps.core.urls")),
 ]
 

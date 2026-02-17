@@ -51,7 +51,7 @@ class ArticleAdmin(admin.ModelAdmin):
             "classes": ("collapse",),
         }),
         ("Publishing", {
-            "fields": ("status", "published_at", "is_featured", "sort_order"),
+            "fields": ("status", "published_at", "is_featured", "sort_order", "section_lead", "section_priority"),
         }),
         ("Sponsorship", {
             "fields": ("is_sponsored", "sponsor_name", "sponsor_url"),
@@ -69,10 +69,10 @@ class ArticleAdmin(admin.ModelAdmin):
 
     list_display = (
         "title", "category", "status", "author",
-        "published_at", "is_featured", "sort_order", "updated",
+        "published_at", "is_featured", "section_lead", "sort_order", "section_priority", "updated",
     )
-    list_filter = ("status", "category", "is_featured", "author", "is_sponsored")
-    list_editable = ("status", "is_featured", "sort_order")
+    list_filter = ("status", "category", "is_featured", "section_lead", "author", "is_sponsored")
+    list_editable = ("status", "is_featured", "section_lead", "sort_order", "section_priority")
     search_fields = ("title", "deck", "body_markdown")
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"

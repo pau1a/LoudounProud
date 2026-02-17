@@ -16,6 +16,7 @@ def home(request: HttpRequest) -> HttpResponse:
     return render(request, "core/home.html", {
         "featured": featured,
         "cards": cards,
+        "active_section": None,
     })
 
 

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static easy_thumbnails_tags ad_tags most_read_tags newsletter_tags %}
+
+{% block title %}{{ section_display }} News in Ayrshire — {{ settings.site_name }}{% endblock %}
+{% block meta_description %}{{ section_description }}{% endblock %}
+{% block og_title %}{{ section_display }} — {{ settings.site_name }}{% endblock %}
+{% block og_description %}{{ section_description }}{% endblock %}
+
+{% block content %}
+<!-- Section Header -->
+<section class="section-header">
+  <div class="container">
+    <h1 class="section-header__title">{{ section_display }}</h1>
+    <p class="section-header__desc">{{ section_description }}</p>
+  </div>
+</section>
+
+{% if lead %}
+<!-- Lead Story -->
+<section class="section">
+  <div class="container">
+    <div class="lead-story">
+      {% include "includes/_article_card.html" with card=lead is_featured=True %}
+    </div>
+  </div>
+</section>
+
+<!-- Leaderboard Ad -->
+<div class="ad-slot ad-slot--leaderboard">
+  <span class="ad-slot__label">Advertisement</span>
+  <div class="ad-slot__unit" data-slot="leaderboard">
+    {% ad_slot "leaderboard" %}
+  </div>
+</div>
+
+<!-- Main + Rail -->
+<section class="section">
+  <div class="container">
+    <div class="content-rail">
+      <div class="content-rail__main">
+        {% if secondaries %}
+        <div class="section-secondaries">
+          {% for card in secondaries %}
+            {% include "includes/_article_card.html" with card=card %}
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if articles %}
+        <div class="section-grid">
+          {% for card in articles %}
+            {% include "includes/_article_card.html" with card=card %}
+          {% endfor %}
+        </div>
+
+        {% if articles.has_other_pages %}
+        <nav class="pagination" aria-label="Section pages">
+          {% if articles.has_previous %}
+          <a href="?page={{ articles.previous_page_number }}" class="pagination__link">Previous</a>
+          {% endif %}
+          <span class="pagination__info">Page {{ articles.number }} of {{ articles.paginator.num_pages }}</span>
+          {% if articles.has_next %}
+          <a href="?page={{ articles.next_page_number }}" class="pagination__link">Next</a>
+          {% endif %}
+        </nav>
+        {% endif %}
+        {% endif %}
+      </div>
+
+      <aside class="content-rail__side">
+        <div class="rail-block">
+          {% newsletter_signup "rail_primary" %}
+        </div>
+
+        <div class="rail-block">
+          <h4 class="rail-block__title">Most Read</h4>
+          {% most_read "24h" 5 %}
+        </div>
+
+        <div class="ad-slot ad-slot--rail">
+          <span class="ad-slot__label">Advertisement</span>
+          <div class="ad-slot__unit" data-slot="rail-mpu">
+            {% ad_slot "rail-mpu" %}
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% else %}
+<!-- Empty section — no published articles -->
+<section class="section">
+  <div class="container">
+    <div class="content-rail">
+      <div class="content-rail__main">
+        <p class="text-muted">Stories coming soon.</p>
+      </div>
+      <aside class="content-rail__side">
+        <div class="rail-block">
+          {% newsletter_signup "rail_primary" %}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

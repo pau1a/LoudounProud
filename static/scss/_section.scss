@@ -1,0 +1,45 @@
+// ============================================
+// Section Pages — Editorial Destinations
+// Typography carries authority, not colour
+// ============================================
+
+.section-header {
+  padding: $space-xl 0 $space-lg;
+  border-bottom: 1px solid $mist-grey;
+  margin-bottom: $space-lg;
+
+  &__title {
+    font-family: $font-heading;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: $graphite;
+    line-height: $line-height-heading;
+    margin-bottom: $space-xs;
+  }
+
+  &__desc {
+    color: $slate;
+    font-size: $font-size-lg;
+    line-height: $line-height-base;
+  }
+}
+
+.section-secondaries {
+  display: grid;
+  gap: $space-lg;
+  margin-bottom: $space-xl;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.section-grid {
+  display: grid;
+  gap: $space-lg;
+  margin-bottom: $space-xl;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

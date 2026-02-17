@@ -20,6 +20,16 @@ CATEGORY_CHOICES = [
     ("culture", "Culture"),
 ]
 
+VALID_SECTIONS = {key for key, _ in CATEGORY_CHOICES}
+
+SECTION_DESCRIPTIONS = {
+    "news": "Breaking stories, council updates, and the issues shaping Ayrshire.",
+    "business": "Local companies, hiring, development, and economic activity across Ayrshire.",
+    "community": "The people, places, and initiatives that bring our communities together.",
+    "sport": "Match reports, results, and the stories behind Ayrshire's sporting life.",
+    "culture": "Arts, heritage, events, and the creative pulse of the region.",
+}
+
 
 class Author(models.Model):
     name = models.CharField(max_length=200, verbose_name="Display name")
@@ -98,6 +108,8 @@ class Article(models.Model):
         help_text="Hide from Most Read lists (legal, sensitive, sponsored)",
     )
     sort_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first on the homepage")
+    section_lead = models.BooleanField(default=False, help_text="Feature as the lead story on its section page")
+    section_priority = models.IntegerField(default=0, help_text="Higher number = appears earlier on section page")
 
     class Meta:
         ordering = ["sort_order", "-created"]

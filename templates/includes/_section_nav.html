@@ -1,9 +1,9 @@
 <nav class="section-nav" aria-label="Section navigation">
   <div class="container section-nav__inner">
-    <a href="{% url 'core:home' %}" class="section-nav__link section-nav__link--active">News</a>
-    <a href="{% url 'core:home' %}" class="section-nav__link">Business</a>
-    <a href="{% url 'core:home' %}" class="section-nav__link">Community</a>
-    <a href="{% url 'core:home' %}" class="section-nav__link">Sport</a>
-    <a href="{% url 'core:home' %}" class="section-nav__link">Culture</a>
+    <a href="{% url 'section_page' 'news' %}" class="section-nav__link{% if active_section == 'news' %} section-nav__link--active{% endif %}">News</a>
+    <a href="{% url 'section_page' 'business' %}" class="section-nav__link{% if active_section == 'business' %} section-nav__link--active{% endif %}">Business</a>
+    <a href="{% url 'section_page' 'community' %}" class="section-nav__link{% if active_section == 'community' %} section-nav__link--active{% endif %}">Community</a>
+    <a href="{% url 'section_page' 'sport' %}" class="section-nav__link{% if active_section == 'sport' %} section-nav__link--active{% endif %}">Sport</a>
+    <a href="{% url 'section_page' 'culture' %}" class="section-nav__link{% if active_section == 'culture' %} section-nav__link--active{% endif %}">Culture</a>
   </div>
 </nav>

@@ -3,7 +3,14 @@ from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Article, Author, SlugRedirect
+from .models import (
+    CATEGORY_CHOICES,
+    SECTION_DESCRIPTIONS,
+    VALID_SECTIONS,
+    Article,
+    Author,
+    SlugRedirect,
+)
 
 
 def article_detail(request: HttpRequest, slug: str) -> HttpResponse:
@@ -32,6 +39,56 @@ def article_preview(request: HttpRequest, slug: str) -> HttpResponse:
     return render(request, "articles/detail.html", {
         "article": article,
         "is_preview": True,
+    })
+
+
+def section_page(request: HttpRequest, section: str) -> HttpResponse:
+    """Section front page — curated layout mirroring homepage grammar."""
+    if section not in VALID_SECTIONS:
+        from django.http import Http404
+        raise Http404
+
+    section_display = dict(CATEGORY_CHOICES)[section]
+    section_description = SECTION_DESCRIPTIONS.get(section, "")
+
+    articles = (
+        Article.objects.filter(category=section, status="published")
+        .select_related("author")
+        .order_by("-section_lead", "-section_priority", "-published_at")
+    )
+
+    # Resolve lead story
+    lead = articles.first()
+    if not lead:
+        return render(request, "articles/section.html", {
+            "section_key": section,
+            "section_display": section_display,
+            "section_description": section_description,
+            "active_section": section,
+            "lead": None,
+            "secondaries": [],
+            "articles": None,
+        })
+
+    remaining = articles.exclude(pk=lead.pk)
+
+    # Secondary tier: next 3 articles
+    secondaries = list(remaining[:3])
+    secondary_pks = [a.pk for a in secondaries]
+
+    # Grid: everything else, paginated
+    grid_qs = remaining.exclude(pk__in=secondary_pks)
+    paginator = Paginator(grid_qs, 12)
+    page = paginator.get_page(request.GET.get("page"))
+
+    return render(request, "articles/section.html", {
+        "section_key": section,
+        "section_display": section_display,
+        "section_description": section_description,
+        "active_section": section,
+        "lead": lead,
+        "secondaries": secondaries,
+        "articles": page,
     })
 
 
