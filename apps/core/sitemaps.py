@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from apps.articles.models import Article, CATEGORY_CHOICES
+from apps.articles.models import Article, CATEGORY_CHOICES, Town
 
 
 class StaticViewSitemap(Sitemap):
@@ -35,3 +35,14 @@ class ArticleSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.updated
+
+
+class TownSitemap(Sitemap):
+    changefreq = "daily"
+    priority = 0.7
+
+    def items(self):
+        return Town.objects.all()
+
+    def location(self, item):
+        return item.get_absolute_url()

@@ -2,7 +2,20 @@ from django.contrib import admin
 from django.utils import timezone
 from django.utils.html import format_html
 
-from .models import Article, Author, SlugRedirect
+from .models import Article, Author, SlugRedirect, Town
+
+
+@admin.register(Town)
+class TownAdmin(admin.ModelAdmin):
+    list_display = ("name", "council_area", "sort_order", "article_count")
+    list_filter = ("council_area",)
+    list_editable = ("sort_order",)
+    search_fields = ("name",)
+    prepopulated_fields = {"slug": ("name",)}
+
+    def article_count(self, obj):
+        return obj.articles.filter(status="published").count()
+    article_count.short_description = "Articles"
 
 
 @admin.register(Author)
@@ -46,16 +59,23 @@ class ArticleAdmin(admin.ModelAdmin):
             "fields": ("body_markdown",),
             "description": "Write in Markdown. Headings, bold, italic, links, lists, and blockquotes are supported.",
         }),
-        ("Hero Image", {
+        ("Main Image", {
+            "fields": ("main_image",),
+        }),
+        ("Hero Image (legacy)", {
             "fields": ("hero_image", "hero_caption", "hero_alt"),
             "classes": ("collapse",),
+            "description": "Legacy hero image — if a Main Image is set above, it takes priority.",
         }),
         ("Publishing", {
-            "fields": ("status", "published_at", "is_featured", "sort_order", "section_lead", "section_priority"),
+            "fields": ("status", "published_at", "is_featured", "sort_order", "section_lead", "section_priority", "homepage_secondary", "secondary_priority", "feature_frame"),
         }),
         ("Sponsorship", {
             "fields": ("is_sponsored", "sponsor_name", "sponsor_url"),
             "classes": ("collapse",),
+        }),
+        ("Location", {
+            "fields": ("towns",),
         }),
         ("Settings", {
             "fields": ("exclude_from_most_read",),
@@ -69,14 +89,15 @@ class ArticleAdmin(admin.ModelAdmin):
 
     list_display = (
         "title", "category", "status", "author",
-        "published_at", "is_featured", "section_lead", "sort_order", "section_priority", "updated",
+        "published_at", "is_featured", "homepage_secondary", "section_lead", "sort_order", "section_priority", "updated",
     )
-    list_filter = ("status", "category", "is_featured", "section_lead", "author", "is_sponsored")
-    list_editable = ("status", "is_featured", "section_lead", "sort_order", "section_priority")
+    list_filter = ("status", "category", "is_featured", "homepage_secondary", "section_lead", "author", "is_sponsored")
+    list_editable = ("status", "is_featured", "homepage_secondary", "section_lead", "sort_order", "section_priority")
     search_fields = ("title", "deck", "body_markdown")
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"
     readonly_fields = ("body_html_preview", "preview_link")
+    filter_horizontal = ("towns",)
     inlines = [SlugRedirectInline]
 
     actions = ["publish_now", "archive", "mark_draft"]

@@ -1,0 +1,40 @@
+{% load easy_thumbnails_tags %}
+<article class="featured-card{% if is_lead %} featured-card--lead{% endif %}{% if card.feature_frame %} featured-card--framed{% endif %}{% if not card.display_image %} featured-card--no-image{% endif %}" data-card-id="{{ card.pk }}">
+  <a href="{{ card.get_absolute_url }}" class="featured-card__link">
+    {% if card.display_image %}
+    <div class="featured-card__image">
+      <picture>
+        <source media="(max-width: 799px)" srcset="{% thumbnail card.display_image 'hero_mobile' %}">
+        <img src="{% thumbnail card.display_image 'hero' %}" alt="{{ card.hero_alt|default:card.title }}"{% if is_lead %} loading="eager"{% else %} loading="lazy"{% endif %}>
+      </picture>
+      <div class="featured-card__gradient"></div>
+      <div class="featured-card__overlay">
+        <div class="featured-card__meta">
+          <span class="featured-card__category">{{ card.get_category_display }}</span>
+          {% if card.time_label %}
+          <span class="featured-card__separator">&bull;</span>
+          <span class="featured-card__time">{{ card.time_label }}</span>
+          {% endif %}
+        </div>
+        <h3 class="featured-card__headline">{{ card.title }}</h3>
+        {% if card.deck %}<p class="featured-card__deck">{{ card.deck }}</p>{% endif %}
+      </div>
+    </div>
+    {% else %}
+    <div class="featured-card__body">
+      <div class="featured-card__meta">
+        <span class="featured-card__category">{{ card.get_category_display }}</span>
+        {% if card.time_label %}
+        <span class="featured-card__separator">&bull;</span>
+        <span class="featured-card__time">{{ card.time_label }}</span>
+        {% endif %}
+      </div>
+      <h3 class="featured-card__headline">{{ card.title }}</h3>
+      {% if card.deck %}<p class="featured-card__deck">{{ card.deck }}</p>{% endif %}
+    </div>
+    {% endif %}
+    {% if card.byline_display %}
+    <div class="featured-card__byline">{{ card.byline_display }}</div>
+    {% endif %}
+  </a>
+</article>

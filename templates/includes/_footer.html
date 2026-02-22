@@ -31,6 +31,19 @@
       </div>
 
       <div>
+        <h4 class="site-footer__heading">Coverage</h4>
+        <div class="site-footer__towns">
+          {% regroup all_towns by get_council_area_display as town_groups %}
+          {% for group in town_groups %}
+          <div class="site-footer__town-group">
+            <span class="site-footer__town-area">{{ group.grouper }}</span>
+            {% for town in group.list %}<a href="{{ town.get_absolute_url }}" class="site-footer__link">{{ town.name }}</a>{% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
         {% load newsletter_tags %}
         {% newsletter_signup "footer_global" %}
       </div>

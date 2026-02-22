@@ -15,7 +15,7 @@
   margin-bottom: $space-xl;
 
   @media (min-width: $bp-md) {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
   }
 }
 
@@ -77,6 +77,26 @@
     background: rgba($white, 0.2);
     color: $white;
   }
+}
+
+.site-footer__towns {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.site-footer__town-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.site-footer__town-area {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba($white, 0.4);
+  font-weight: 500;
 }
 
 .site-footer__bottom {

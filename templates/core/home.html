@@ -27,7 +27,7 @@
 <div class="authority-band">
   <div class="container">
     <p class="authority-band__text">Independent. Local. Noise-free. Covering Ayrshire's towns, business, and civic life.</p>
-    <p class="authority-band__geo">Kilmarnock · Ayr · Troon · Prestwick · Irvine · Stewarton · Galston · Darvel</p>
+    <p class="authority-band__geo">{% for town in all_towns %}<a href="{{ town.get_absolute_url }}" class="authority-band__town">{{ town.name }}</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>
   </div>
 </div>
 
@@ -35,15 +35,23 @@
 {% if featured or cards %}
 <section class="section">
   <div class="container">
-    <div class="section__header">
-      <h2>What's Happening in Ayrshire</h2>
-      <p class="section__subtitle">The stories that matter to our community this week</p>
+    <div class="section__header section__header--compact">
+      <h2 class="section__heading--sm">Latest</h2>
     </div>
 
     <!-- Lead story — full width above the rail split -->
     {% if featured %}
     <div class="lead-story">
-      {% include "includes/_article_card.html" with card=featured is_featured=True %}
+      {% include "includes/_featured_card.html" with card=featured is_lead=True %}
+    </div>
+    {% endif %}
+
+    <!-- Secondary authority band -->
+    {% if secondaries %}
+    <div class="secondary-band">
+      {% for card in secondaries %}
+        {% include "includes/_featured_card.html" with card=card %}
+      {% endfor %}
     </div>
     {% endif %}
 
@@ -150,4 +158,54 @@
     {% newsletter_signup "footer_cta" %}
   </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+  var band = document.querySelector('.secondary-band');
+  if (!band) return;
+
+  var headlines = band.querySelectorAll('.featured-card__headline');
+  var decks = band.querySelectorAll('.featured-card__deck');
+  if (headlines.length < 2) return;
+
+  var originalHeadlineSize = parseFloat(getComputedStyle(headlines[0]).fontSize);
+  var originalDeckSize = decks.length ? parseFloat(getComputedStyle(decks[0]).fontSize) : 0;
+  var minSize = 13;
+  var step = 0.5;
+
+  function anyOverflowing() {
+    var overlays = band.querySelectorAll('.featured-card__overlay');
+    for (var i = 0; i < overlays.length; i++) {
+      if (overlays[i].scrollHeight > overlays[i].clientHeight + 1) return true;
+    }
+    for (var i = 0; i < headlines.length; i++) {
+      if (headlines[i].scrollHeight > headlines[i].clientHeight + 1) return true;
+    }
+    return false;
+  }
+
+  function equalize() {
+    var hSize = originalHeadlineSize;
+    headlines.forEach(function(h) { h.style.fontSize = hSize + 'px'; });
+    decks.forEach(function(d) { d.style.fontSize = originalDeckSize + 'px'; });
+
+    var limit = 40;
+    while (limit-- > 0 && hSize > minSize && anyOverflowing()) {
+      hSize -= step;
+      var ratio = hSize / originalHeadlineSize;
+      headlines.forEach(function(h) { h.style.fontSize = hSize + 'px'; });
+      decks.forEach(function(d) { d.style.fontSize = Math.max(originalDeckSize * ratio, minSize) + 'px'; });
+    }
+  }
+
+  equalize();
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(equalize, 150);
+  });
+})();
+</script>
 {% endblock %}

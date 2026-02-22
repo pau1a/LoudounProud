@@ -7,14 +7,28 @@ from apps.articles.models import Article
 
 
 def home(request: HttpRequest) -> HttpResponse:
-    all_articles = Article.objects.filter(status="published")
+    all_articles = Article.objects.filter(status="published").select_related("author")
+    exclude_pks = []
+
+    # Lead story
     featured = all_articles.filter(is_featured=True).first()
     if featured:
-        cards = all_articles.exclude(pk=featured.pk)
-    else:
-        cards = all_articles
+        exclude_pks.append(featured.pk)
+
+    # Secondary authority band (up to 4 articles, 2×2 grid)
+    secondaries = list(
+        all_articles.filter(homepage_secondary=True)
+        .exclude(pk__in=exclude_pks)
+        .order_by("-secondary_priority", "-published_at")[:4]
+    )
+    exclude_pks.extend(a.pk for a in secondaries)
+
+    # Remaining grid — most recent first
+    cards = all_articles.exclude(pk__in=exclude_pks).order_by("-published_at")
+
     return render(request, "core/home.html", {
         "featured": featured,
+        "secondaries": secondaries,
         "cards": cards,
         "active_section": None,
     })

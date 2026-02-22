@@ -17,6 +17,20 @@
     margin-bottom: $space-xs;
   }
 
+  &__badge {
+    display: inline-block;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: $slate;
+    background: $mist-grey;
+    padding: 0.2em 0.6em;
+    border-radius: 2px;
+    margin-bottom: $space-sm;
+  }
+
   &__desc {
     color: $slate;
     font-size: $font-size-lg;

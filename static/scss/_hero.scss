@@ -5,12 +5,12 @@
 
 .hero {
   position: relative;
-  padding: $space-sm 0 $space-md;
+  padding: $space-sm 0;
   border-bottom: 1px solid $mist-grey;
   overflow: hidden;
 
   @media (min-width: $bp-md) {
-    padding: $space-md 0 $space-lg;
+    padding: $space-sm 0 $space-md;
   }
 }
 
@@ -28,8 +28,14 @@
     color: $white;
   }
 
-  h1 { color: $white; }
-  .hero__text { color: rgba(255, 255, 255, 0.85); }
+  h1 {
+    color: $white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+  .hero__text {
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
 
   .hero__subscribe {
     input[type="email"] {
@@ -37,6 +43,25 @@
       border-color: transparent;
     }
     button {
+      background: $white;
+      color: $graphite;
+      &:hover { background: $mist-grey; }
+    }
+  }
+
+  // Make newsletter placement inline inside hero on desktop
+  .newsletter-form--stacked {
+    @media (min-width: $bp-md) {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .newsletter-form__input {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: transparent;
+    }
+
+    .newsletter-form__btn {
       background: $white;
       color: $graphite;
       &:hover { background: $mist-grey; }
@@ -63,9 +88,9 @@
     inset: 0;
     background: linear-gradient(
       to right,
-      rgba(0, 0, 0, 0.68) 0%,
-      rgba(0, 0, 0, 0.60) 50%,
-      rgba(0, 0, 0, 0.40) 100%
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.65) 50%,
+      rgba(0, 0, 0, 0.48) 100%
     );
   }
 
@@ -95,18 +120,18 @@
   font-size: $font-size-sm;
   font-weight: 600;
   border-radius: $radius-sm;
-  margin-bottom: $space-md;
+  margin-bottom: $space-sm;
 }
 
 .hero h1 {
-  margin-bottom: $space-md;
+  margin-bottom: $space-sm;
 }
 
 .hero__text {
-  font-size: $font-size-lg;
-  line-height: 1.7;
+  font-size: $font-size-base;
+  line-height: 1.6;
   color: $slate;
-  margin-bottom: $space-lg;
+  margin-bottom: $space-md;
 }
 
 // Inline subscribe form in hero
@@ -173,4 +198,13 @@
   font-size: 0.8125rem;  // 13px
   color: $slate;
   letter-spacing: 0.04em;
+}
+
+.authority-band__town {
+  color: $slate;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $graphite;
+  }
 }

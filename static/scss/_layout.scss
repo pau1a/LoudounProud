@@ -34,6 +34,18 @@
   text-align: center;
 }
 
+.section__header--compact {
+  margin-bottom: $space-md;
+}
+
+.section__heading--sm {
+  font-size: $font-size-lg;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $slate;
+}
+
 .section__subtitle {
   margin-top: $space-sm;
   color: $slate;  // editorial contrast, not lifestyle-faint

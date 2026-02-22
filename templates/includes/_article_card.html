@@ -1,11 +1,11 @@
 {% load easy_thumbnails_tags %}
 <article class="content-card{% if is_featured %} content-card--featured{% endif %}" data-card-id="{{ card.pk }}">
-  {% if card.hero_image %}
+  {% if card.display_image %}
   <div class="content-card__image">
     {% if is_featured %}
-    <img src="{% thumbnail card.hero_image 'hero' %}" alt="{{ card.hero_alt|default:card.title }}" loading="lazy">
+    <img src="{% thumbnail card.display_image 'hero' %}" alt="{{ card.hero_alt|default:card.title }}" loading="lazy">
     {% else %}
-    <img src="{% thumbnail card.hero_image 'card' %}" alt="{{ card.hero_alt|default:card.title }}" loading="lazy">
+    <img src="{% thumbnail card.display_image 'card' %}" alt="{{ card.hero_alt|default:card.title }}" loading="lazy">
     {% endif %}
   </div>
   {% endif %}

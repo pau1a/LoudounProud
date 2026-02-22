@@ -22,12 +22,9 @@
     <h2 class="advertise-section__heading">Trusted Local Coverage</h2>
     <p class="advertise-section__text">Our journalism reaches readers across Ayrshire's key communities:</p>
     <ul class="advertise-coverage__towns">
-      <li>Kilmarnock</li>
-      <li>Ayr</li>
-      <li>Troon</li>
-      <li>Prestwick</li>
-      <li>Irvine</li>
-      <li>Surrounding communities</li>
+      {% for town in all_towns %}
+      <li><a href="{{ town.get_absolute_url }}">{{ town.name }}</a></li>
+      {% endfor %}
     </ul>
   </div>
 </section>

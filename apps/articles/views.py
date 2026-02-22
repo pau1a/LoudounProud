@@ -10,6 +10,7 @@ from .models import (
     Article,
     Author,
     SlugRedirect,
+    Town,
 )
 
 
@@ -89,6 +90,43 @@ def section_page(request: HttpRequest, section: str) -> HttpResponse:
         "lead": lead,
         "secondaries": secondaries,
         "articles": page,
+    })
+
+
+def town_page(request: HttpRequest, slug: str) -> HttpResponse:
+    """Town landing page — articles tagged with this town."""
+    town = get_object_or_404(Town, slug=slug)
+
+    articles = (
+        Article.objects.filter(towns=town, status="published")
+        .select_related("author")
+        .order_by("-published_at")
+    )
+
+    lead = articles.first()
+    if not lead:
+        return render(request, "articles/town.html", {
+            "town": town,
+            "lead": None,
+            "secondaries": [],
+            "articles": None,
+            "active_section": None,
+        })
+
+    remaining = articles.exclude(pk=lead.pk)
+    secondaries = list(remaining[:3])
+    secondary_pks = [a.pk for a in secondaries]
+
+    grid_qs = remaining.exclude(pk__in=secondary_pks)
+    paginator = Paginator(grid_qs, 12)
+    page = paginator.get_page(request.GET.get("page"))
+
+    return render(request, "articles/town.html", {
+        "town": town,
+        "lead": lead,
+        "secondaries": secondaries,
+        "articles": page,
+        "active_section": None,
     })
 
 

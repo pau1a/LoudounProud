@@ -233,3 +233,244 @@
     color: $slate;
   }
 }
+
+// ============================================
+// Featured Card — Editorial Image Overlay
+// Image-dominant. Typography signals, not shapes.
+// ============================================
+
+.featured-card {
+  position: relative;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background: $graphite;
+
+  &__link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &__image {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.20) 45%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+    pointer-events: none;
+  }
+
+  &__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: $space-lg;
+    z-index: 2;
+
+    @media (min-width: $bp-md) {
+      padding: $space-lg $space-xl;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    margin-bottom: $space-sm;
+  }
+
+  &__category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.70);
+  }
+
+  &__separator {
+    color: rgba(255, 255, 255, 0.40);
+    font-size: 0.75rem;
+  }
+
+  &__time {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.50);
+  }
+
+  &__headline {
+    font-family: $font-heading;
+    font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+    font-weight: 700;
+    color: $white;
+    line-height: $line-height-heading;
+    margin-bottom: $space-xs;
+  }
+
+  &__deck {
+    color: rgba(255, 255, 255, 0.80);
+    font-size: $font-size-sm;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__byline {
+    padding: $space-sm $space-lg;
+    font-size: $font-size-sm;
+    color: $slate;
+    font-weight: 600;
+  }
+
+  &:hover {
+    .featured-card__image img {
+      transform: scale(1.02);
+      transition: transform 0.4s ease;
+    }
+  }
+}
+
+// Lead variant — dominant story
+.featured-card--lead {
+  .featured-card__image {
+    aspect-ratio: auto;
+    min-height: 320px;
+
+    @media (min-width: $bp-md) {
+      min-height: 420px;
+    }
+  }
+
+  .featured-card__overlay {
+    @media (min-width: $bp-md) {
+      max-width: 78%;
+      padding: $space-xl;
+    }
+  }
+
+  .featured-card__headline {
+    font-size: clamp(1.625rem, 3.2vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: $space-sm;
+  }
+
+  .featured-card__deck {
+    font-size: $font-size-base;
+    -webkit-line-clamp: 3;
+  }
+
+  .featured-card__byline {
+    padding: $space-md $space-xl;
+  }
+}
+
+// No-image variant — light card with dark text
+.featured-card--no-image {
+  background: $white;
+  border: 1px solid $mist-grey;
+
+  .featured-card__body {
+    padding: $space-lg;
+
+    @media (min-width: $bp-md) {
+      padding: $space-xl;
+    }
+  }
+
+  .featured-card__category {
+    color: $accent;
+  }
+
+  .featured-card__separator {
+    color: $slate;
+  }
+
+  .featured-card__time {
+    color: #9CA3AF;
+  }
+
+  .featured-card__headline {
+    color: $graphite;
+  }
+
+  .featured-card__deck {
+    color: $slate;
+    -webkit-line-clamp: 3;
+  }
+
+  &.featured-card--lead {
+    .featured-card__body {
+      @media (min-width: $bp-md) {
+        padding: $space-xl $space-2xl;
+        max-width: 78%;
+      }
+    }
+
+    .featured-card__headline {
+      font-size: clamp(1.625rem, 3.2vw, 2.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: $space-sm;
+    }
+
+    .featured-card__deck {
+      font-size: $font-size-base;
+    }
+  }
+}
+
+// Feature frame — rare 1px keyline
+.featured-card--framed {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+// Secondary authority band — 2×2 grid
+.secondary-band {
+  display: grid;
+  gap: $space-lg;
+  margin-top: $space-2xl;
+  margin-bottom: $space-xl;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// Byline row
+.content-card__byline {
+  font-size: $font-size-sm;
+  color: $slate;
+  font-weight: 600;
+  margin-top: $space-xs;
+}
+
+.content-card__sponsored {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: $slate;
+  background: $cold-grey;
+  padding: 1px $space-xs;
+  border-radius: $radius-sm;
+}

@@ -22,6 +22,12 @@ CATEGORY_CHOICES = [
 
 VALID_SECTIONS = {key for key, _ in CATEGORY_CHOICES}
 
+COUNCIL_AREA_CHOICES = [
+    ("east_ayrshire", "East Ayrshire"),
+    ("north_ayrshire", "North Ayrshire"),
+    ("south_ayrshire", "South Ayrshire"),
+]
+
 SECTION_DESCRIPTIONS = {
     "news": "Breaking stories, council updates, and the issues shaping Ayrshire.",
     "business": "Local companies, hiring, development, and economic activity across Ayrshire.",
@@ -66,6 +72,23 @@ class Author(models.Model):
         return self.bio[:277].rsplit(" ", 1)[0] + "..."
 
 
+class Town(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
+    council_area = models.CharField(max_length=20, choices=COUNCIL_AREA_CHOICES)
+    description = models.TextField(blank=True, help_text="SEO description for the town page")
+    sort_order = models.IntegerField(default=0, help_text="Display order within council area")
+
+    class Meta:
+        ordering = ["council_area", "sort_order", "name"]
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("town_page", kwargs={"slug": self.slug})
+
+
 class Article(models.Model):
     title = models.CharField(max_length=300)
     slug = models.SlugField(max_length=300, unique=True)
@@ -73,6 +96,7 @@ class Article(models.Model):
     body_markdown = models.TextField(blank=True, verbose_name="Body (Markdown)")
     body_html = models.TextField(editable=False, blank=True)
 
+    main_image = models.ImageField(upload_to="articles/", blank=True, help_text="Primary article image — used on cards and at the top of the article page")
     hero_image = models.ImageField(upload_to="articles/", blank=True)
     hero_caption = models.CharField(max_length=200, blank=True)
     hero_alt = models.CharField(max_length=200, blank=True)
@@ -110,6 +134,10 @@ class Article(models.Model):
     sort_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first on the homepage")
     section_lead = models.BooleanField(default=False, help_text="Feature as the lead story on its section page")
     section_priority = models.IntegerField(default=0, help_text="Higher number = appears earlier on section page")
+    homepage_secondary = models.BooleanField(default=False, help_text="Show in the secondary authority band on the homepage")
+    secondary_priority = models.IntegerField(default=0, help_text="Higher number = appears earlier in the secondary band")
+    feature_frame = models.BooleanField(default=False, help_text="Add subtle keyline frame to featured image (use sparingly)")
+    towns = models.ManyToManyField("Town", blank=True, related_name="articles")
 
     class Meta:
         ordering = ["sort_order", "-created"]
@@ -214,6 +242,11 @@ class Article(models.Model):
     def body_text(self):
         """Short summary for card display."""
         return self.deck
+
+    @property
+    def display_image(self):
+        """Preferred image for rendering: main_image first, then hero_image."""
+        return self.main_image or self.hero_image
 
     @property
     def link_text(self):

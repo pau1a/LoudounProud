@@ -5,8 +5,8 @@
 {% block meta_description %}{{ article.meta_description }}{% endblock %}
 {% block og_title %}{{ article.title }}{% endblock %}
 {% block og_description %}{{ article.meta_description }}{% endblock %}
-{% if article.hero_image %}
-{% block og_image %}<meta property="og:image" content="{% thumbnail article.hero_image 'og_image' %}">{% endblock %}
+{% if article.display_image %}
+{% block og_image %}<meta property="og:image" content="{% thumbnail article.display_image 'og_image' %}">{% endblock %}
 {% endif %}
 
 {% block extra_css %}
@@ -35,11 +35,11 @@
 {% endif %}
 
 <!-- Hero Image -->
-{% if article.hero_image %}
+{% if article.display_image %}
 <div class="article-hero">
   <picture>
-    <source media="(max-width: 799px)" srcset="{% thumbnail article.hero_image 'hero_mobile' %}">
-    <img src="{% thumbnail article.hero_image 'hero' %}" alt="{{ article.hero_alt|default:article.title }}" loading="eager">
+    <source media="(max-width: 799px)" srcset="{% thumbnail article.display_image 'hero_mobile' %}">
+    <img src="{% thumbnail article.display_image 'hero' %}" alt="{{ article.hero_alt|default:article.title }}" loading="eager">
   </picture>
   {% if article.hero_caption %}
   <p class="article-hero__caption">{{ article.hero_caption }}</p>
@@ -128,7 +128,7 @@
   "@context": "https://schema.org",
   "@type": "NewsArticle",
   "headline": "{{ article.title|escapejs }}",
-  {% if article.hero_image %}"image": "{{ article.hero_image.url }}",{% endif %}
+  {% if article.display_image %}"image": "{{ article.display_image.url }}",{% endif %}
   "datePublished": "{{ article.published_at|date:'c' }}",
   "dateModified": "{{ article.updated|date:'c' }}",
   {% if article.author %}"author": {

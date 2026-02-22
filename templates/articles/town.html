@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 {% load static easy_thumbnails_tags ad_tags most_read_tags newsletter_tags %}
 
-{% block title %}{{ section_display }} News in Ayrshire — {{ settings.site_name }}{% endblock %}
-{% block meta_description %}{{ section_description }}{% endblock %}
-{% block og_title %}{{ section_display }} — {{ settings.site_name }}{% endblock %}
-{% block og_description %}{{ section_description }}{% endblock %}
+{% block title %}{{ town.name }} News — {{ settings.site_name }}{% endblock %}
+{% block meta_description %}{% if town.description %}{{ town.description }}{% else %}Local news, stories, and community updates from {{ town.name }}, {{ town.get_council_area_display }}.{% endif %}{% endblock %}
+{% block og_title %}{{ town.name }} News — {{ settings.site_name }}{% endblock %}
+{% block og_description %}{% if town.description %}{{ town.description }}{% else %}Local news, stories, and community updates from {{ town.name }}, {{ town.get_council_area_display }}.{% endif %}{% endblock %}
 
 {% block content %}
-<!-- Section Header -->
+<!-- Town Header -->
 <section class="section-header">
   <div class="container">
-    <h1 class="section-header__title">{{ section_display }}</h1>
-    <p class="section-header__desc">{{ section_description }}</p>
+    <span class="section-header__badge">{{ town.get_council_area_display }}</span>
+    <h1 class="section-header__title">{{ town.name }}</h1>
+    {% if town.description %}
+    <p class="section-header__desc">{{ town.description }}</p>
+    {% else %}
+    <p class="section-header__desc">Local news, stories, and community updates from {{ town.name }}.</p>
+    {% endif %}
   </div>
 </section>
 
@@ -55,7 +60,7 @@
         </div>
 
         {% if articles.has_other_pages %}
-        <nav class="pagination" aria-label="Section pages">
+        <nav class="pagination" aria-label="Town pages">
           {% if articles.has_previous %}
           <a href="?page={{ articles.previous_page_number }}" class="pagination__link">Previous</a>
           {% endif %}
@@ -89,12 +94,12 @@
   </div>
 </section>
 {% else %}
-<!-- Empty section — no published articles -->
+<!-- Empty town — no published articles -->
 <section class="section">
   <div class="container">
     <div class="content-rail">
       <div class="content-rail__main">
-        <p class="text-muted">Stories coming soon.</p>
+        <p class="text-muted">Stories from {{ town.name }} coming soon.</p>
       </div>
       <aside class="content-rail__side">
         <div class="rail-block">
