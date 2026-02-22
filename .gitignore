@@ -1,51 +1,47 @@
+# ----------------------
 # Python
+# ----------------------
 *.pyc
 __pycache__/
 *.egg-info/
-.venv/
-
-# Environment
-.env
-
-# Database
-db.sqlite3
-
-# Node
-node_modules/
-
-# Compiled CSS (rebuild with npm run sass:build)
-static/css/main.css
-static/css/main.css.map
-
-# Media uploads
-media/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-.DS_Store
-.venv/
-
-.venv/
-
-# Python
-__pycache__/
-*.pyc
 .pytest_cache/
 .mypy_cache/
+.venv/
 
-# Env / secrets
+# ----------------------
+# Environment / Secrets
+# ----------------------
 .env
 .env.*
 *.pem
 *.key
 
-# OS junk
-.DS_Store
+# ----------------------
+# Database
+# ----------------------
+db.sqlite3
 
-# Node (if used)
+# ----------------------
+# Node / Frontend
+# ----------------------
 node_modules/
 dist/
 build/
+
+# Compiled CSS (rebuild with npm run sass:build)
+static/css/main.css
+static/css/main.css.map
+
+# ----------------------
+# Media uploads
+# ----------------------
+media/
+
+# ----------------------
+# IDE / OS
+# ----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
