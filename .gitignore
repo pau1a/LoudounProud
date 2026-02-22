@@ -27,3 +27,25 @@ media/
 *.swo
 .DS_Store
 .venv/
+
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# Env / secrets
+.env
+.env.*
+*.pem
+*.key
+
+# OS junk
+.DS_Store
+
+# Node (if used)
+node_modules/
+dist/
+build/
